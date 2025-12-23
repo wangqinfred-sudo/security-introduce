@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="288" viewBox="0 0 400 288">
+  <rect width="400" height="288" fill="#F3E5F5" rx="8"/>
+  <circle cx="120" cy="140" r="40" fill="#9C27B0"/>
+  <circle cx="200" cy="140" r="40" fill="#9C27B0"/>
+  <circle cx="280" cy="140" r="40" fill="#9C27B0"/>
+  <text x="200" y="210" font-family="Arial, sans-serif" font-size="24" fill="#002A8F" text-anchor="middle">成员权限</text>
+  <text x="200" y="240" font-family="Arial, sans-serif" font-size="14" fill="#546A9E" text-anchor="middle">主图 - 后续替换为实际图片</text>
+</svg>

@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>账号安全介绍</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            display: block;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0;
+        }
+        
+        /* 账号安全介绍页面特定样式 */
+        .account-security-container {
+            max-width: 900px;
+            margin: 40px auto;
+            width: calc(100% - 40px);
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px !important;
+            min-height: 700px;
+        }
+        
+        .back-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            margin-right: 8px;
+            border-radius: 50%;
+            background-color: transparent;
+            color: #002A8F;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            vertical-align: middle;
+        }
+        .back-arrow img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+        
+        .back-arrow svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+        }
+        
+        .back-arrow:hover {
+            background-color: #f5f7fa;
+        }
+        
+        .content-section {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .text-content {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .main-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #002A8F;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #646A73;
+            margin-bottom: 20px;
+        }
+        
+        .feature-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .feature-button {
+            background-color: #f5f7fa;
+            color: #333;
+            border: 1px solid #e3e9f0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-button:hover {
+            background-color: #e3e9f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .flowchart-container {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 移除流程图的背景渐变 */
+        
+        .flowchart-branches {
+            display: flex;
+            gap: 20px;
+            z-index: 1;
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 48%;
+        }
+        
+        .branch > div {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .branch-title {
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .sso-branch .branch-title {
+            background-color: #3370FF;
+        }
+        
+        .feishu-branch .branch-title {
+            background-color: #00D6B9;
+        }
+        
+        .branch-item {
+            padding: 12px 24px;
+            border: 1px solid #e3e9f0;
+            border-radius: 6px;
+            background-color: #fff;
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button.branch-item {
+            border: 1px solid #e3e9f0;
+            outline: none;
+            font-family: inherit;
+        }
+        
+        .branch-item:hover {
+            background-color: #f5f7fa;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .branch-item:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .branch-line {
+            width: 2px;
+            height: 30px;
+            background-color: #e3e9f0;
+            align-self: center;
+        }
+        
+        /* 确保div之间的间距为20px */
+        /* h1和tabs之间的间距 */
+        .main-title + .tab-section {
+            margin-top: 20px !important;
+        }
+        
+        /* tabs和description之间的间距 */
+        .tab-section + .description {
+            margin-top: 20px !important;
+        }
+        
+        
+        /* 顶部区域样式 */
+        .top-section {
+            /* 移除margin-bottom，避免与gap叠加 */
+        }
+        
+        /* 中间内容区样式 */
+        .content-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px !important;
+            background-color: #fff;
+            border-radius: 12px;
+            border: 1px solid #e3e9f0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Tab内容样式 */
+        .tab-content {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #e3e9f0;
+            border-radius: 12px;
+        }
+        
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Tab内容内部样式 */
+        .tab-content-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: auto;
+            text-align: center;
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
+        
+        /* Tab图片样式 */
+        .tab-image {
+            max-width: 100%;
+            max-height: 100%;
+            margin-bottom: 0;
+            opacity: 1;
+        }
+        
+        /* 两步验证双图片样式 */
+        /* 确保容器能同时适应宽度和高度 */
+        .two-factor-images {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 两步验证交互版本样式 */
+        /* 调整整体容器的边距和对齐方式 */
+        .two-factor-images.interactive {
+            margin: 0 !important; /* 去掉上下边距 */
+            padding: 0 !important; /* 确保内部元素无内边距 */
+            justify-content: center; /* 水平对齐方式 */
+            align-items: center; /* 垂直对齐方式 */
+            width: 100% !important; /* 确保占据全部宽度 */
+            box-sizing: border-box !important; /* 确保内边距和边框不影响宽度计算 */
+        }
+        
+        /* 子tab容器样式 */
+        .sub-tab-container {
+            margin: 0;
+            padding: 0; /* 移除容器内边距 */
+            margin-bottom: 0;
+        }
+        
+        /* 子tab按钮样式 */
+        .sub-tab-button {
+            margin: 0;
+            padding-left: 8px;
+            padding-right: 8px;
+            height: 32px;
+            border: none;
+            background: none;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+        
+        .sub-tab-button.active {
+            color: #5B65F5;
+            font-weight: 500;
+            border-radius: 8px;
+        }
+        
+        /* 子tab内容样式（统一为块级显示，移除高度与负外边距） */
+        .sub-tab-content {
+            display: block;
+            padding: 0;
+            margin: 0;
+        }
+        
+        /* 子tab内容的文字说明区域 */
+        .sub-tab-content .tab-content-inner {
+            height: auto;
+            margin-top: 10px;
+            padding-top: 0;
+            flex-shrink: 0;
+        }
+        
+        /* 步骤容器 */
+        .step-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%; /* 移除最大宽度限制 */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 步骤指示器样式 - 导航点容器 */
+        .step-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            gap: 15px;
+            z-index: 10; /* 确保导航点在最上层显示 */
+        }
+        
+        /* 管理员配置的导航点容器显示，与普通导航一致 */
+        .admin-indicators {
+            display: flex;
+        }
+        
+        .step-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .step-indicator.active {
+            background-color: #0060FF;
+        }
+        
+        /* 图片容器 - 针对不同模块使用不同的宽高比 */
+        .image-container {
+            position: relative;
+            width: 100%;
+            max-height: 600px; /* 设置最大高度，避免在大屏幕上过大 */
+            margin: 0;
+            background-color: #F2F3F5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        /* 为登录方式管理管理员端设置特定宽高比 */
+        #sub-content-login-method-admin .image-container {
+            aspect-ratio: 1.6/1; /* 管理员端图片宽高比 1.6:1 */
+        }
+        
+        /* 为登录方式管理员工端设置特定宽高比 */
+        #sub-content-login-method-employee .image-container {
+            aspect-ratio: 1.71/1; /* 员工端图片宽高比约 1.71:1 */
+        }
+        
+        /* 其他模块使用默认高度 */
+        .image-container:not(#sub-content-login-method-admin .image-container):not(#sub-content-login-method-employee .image-container) {
+            height: 400px;
+        }
+        
+        .step-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            margin: 0;
+        }
+        
+        .step-image.active {
+            opacity: 1;
+        }
+        
+        /* 热区容器 - 保持覆盖整个图片容器 */
+        .hotspots-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        /* 热区样式 */
+        .hotspot {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            display: none;
+            transform-origin: center center;
+        }
+        
+        /* 使用伪元素实现脉冲效果，避免与transform冲突 */
+        .hotspot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(0, 96, 255, 0.3);
+            border: 2px solid rgba(0, 96, 255, 0.8);
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+        
+        /* 已移除通用热区样式，各模块样式在对应区域定义 */
+
+        /* ====================== */
+        /* 各功能模块悬浮按钮位置 */
+        /* ====================== */
+        
+        /* 1. SSO账号登录 (员工端) */
+        /* 提高优先级确保样式生效 */
+        #sub-content-sso-employee .hotspot[data-step="1"] {
+                top: 70% !important;
+                left: 65% !important;
+            }
+            #sub-content-sso-employee .hotspot[data-step="2"] {
+                top: 70% !important;
+                left: 65% !important;
+            }
+            #sub-content-sso-employee .hotspot[data-step="3"] {
+                top: 55% !important;
+                left: 73% !important;
+            }
+            #sub-content-sso-employee .hotspot[data-step="4"] {
+                top: 30% !important;
+                left: 65% !important;
+            }
+        
+        /* 2. 登录方式管理 (员工端) */
+        /* 当前热点按钮位置：距离容器顶部50%，左侧50% */
+        #sub-content-login-method-employee .hotspot[data-step="1"] {
+            top: 32% !important;
+            left: 70% !important;
+            animation: pulse 2s infinite;
+        }
+        
+        #sub-content-login-method-employee .hotspot[data-step="2"] {
+            top: 45% !important;
+            left: 55% !important;
+        }
+        
+        /* 5. 登录方式管理 (管理员端) */
+        #sub-content-login-method-admin .hotspots-container .hotspot[data-step="1"] {
+            top: 22% !important;
+            left: 85% !important;
+        }
+        #sub-content-login-method-admin .hotspots-container .hotspot[data-step="2"] {
+            top: 22% !important;
+            left: 85% !important;
+        }
+        #sub-content-login-method-admin .hotspot[data-step="3"] {
+            display: none !important;
+        }
+        
+        /* 3. 登录密码管理 (员工端) */
+        #sub-content-password-employee .hotspot[data-step="1"] {
+            top: 30% !important;
+            left: 65% !important;
+        }
+        
+        #sub-content-password-employee .hotspot[data-step="2"] {
+            top: 70% !important;
+            left: 65% !important;
+        }
+        
+        /* 5. 登录密码管理 (管理员端) */
+        #sub-content-password-admin .hotspot[data-step="1"] {
+            top: 20% !important;
+            left: 70% !important;
+        }
+        
+        #sub-content-password-admin .hotspot[data-step="2"] {
+            top: 15% !important;
+            left: 60% !important;
+        }
+        
+        #sub-content-password-admin .hotspot[data-step="3"] {
+            display: none !important;
+        }
+        
+        /* 4. 两步验证 (员工端) */
+        #sub-content-employee .hotspot[data-step="1"] {
+            top: 30% !important;
+            left: 65% !important;
+        }
+        
+        #sub-content-employee .hotspot[data-step="2"] {
+            top: 70% !important;
+            left: 65% !important;
+        }
+        
+        #sub-content-employee .hotspot[data-step="3"] {
+            top: 30% !important;
+            left: 65% !important;
+        }
+        
+        #sub-content-employee .hotspot[data-step="4"] {
+            top: 40% !important;
+            left: 65% !important;
+        }
+        
+        /* 两步验证 (管理员端) */
+        #sub-content-admin .hotspot[data-step="1"] {
+            top: 45% !important;
+            left: 65% !important;
+        }
+        
+        #sub-content-admin .hotspot[data-step="2"] {
+            top: 30% !important;
+            left: 80% !important;
+        }
+        
+        #sub-content-admin .hotspot[data-step="3"] {
+            top: 30% !important;
+            left: 80% !important;
+        }
+        
+        /* 5. 登录有效期管理 (员工端) */
+        #sub-content-validity-employee .hotspot[data-step="1"] {
+            top: 50% !important;
+            left: 50% !important;
+        }
+        
+        #sub-content-validity-employee .hotspot[data-step="2"] {
+            top: 60% !important;
+            left: 70% !important;
+        }
+        
+        /* 登录有效期管理 (管理员端) */
+        #sub-content-validity-admin .hotspot[data-step="1"] {
+            top: 50% !important;
+            left: 50% !important;
+        }
+        
+        #sub-content-validity-admin .hotspot[data-step="3"] {
+            top: 60% !important;
+            left: 70% !important;
+        }
+        
+        /* SSO账号登录 (管理员端) */
+        #sub-content-sso-admin .hotspot[data-step="1"] {
+                top: 32% !important;
+                left: 75% !important;
+            }
+            #sub-content-sso-admin .hotspot[data-step="2"] {
+                top: 32% !important;
+                left: 75% !important;
+            }
+        
+        #sub-content-appeal-employee .hotspot[data-step="1"] {
+            top: 50% !important;
+            left: 50% !important;
+        }
+        
+        #sub-content-appeal-employee .hotspot[data-step="2"] {
+            top: 60% !important;
+            left: 70% !important;
+        }
+        
+        /* 步骤4热区 - 示例位置 */
+        .hotspot[data-step="4"] {
+            top: 70%;
+            left: 50%;
+        }
+        
+        /* 当前步骤的热区显示 */
+        .hotspot[data-step="1"],
+        .hotspot[data-step="2"],
+        .hotspot[data-step="3"],
+        .hotspot[data-step="4"] {
+            display: none;
+        }
+        
+        /* 显示当前激活步骤的热区 */
+        .image-container .step-image.active[data-step="1"] ~ .hotspots-container .hotspot[data-step="1"] {
+            display: block;
+        }
+        
+        .image-container .step-image.active[data-step="2"] ~ .hotspots-container .hotspot[data-step="2"] {
+            display: block;
+        }
+        
+        .image-container .step-image.active[data-step="3"] ~ .hotspots-container .hotspot[data-step="3"] {
+            display: block;
+        }
+        
+        .image-container .step-image.active[data-step="4"] ~ .hotspots-container .hotspot[data-step="4"] {
+            display: block;
+        }
+        
+        /* 热区动画 */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+        }
+        
+        /* 调整当前步骤对应的热区显示 */
+        .hotspot.active {
+            display: block;
+        }
+        
+        /* 调整主容器 */
+        .step1-container {
+            max-width: 80%; /* 限制第一张图的最大宽度为容器的80% */
+            max-height: 80%; /* 限制最大高度为白色容器的80% */
+            margin: 0 auto; /* 居中显示 */
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        /* 第一张图样式 - 确保同时跟随宽度和高度自适应并居中 */
+        .step1-container .tab-image:first-child {
+            max-width: 100%; /* 相对于容器的80%宽度 */
+            max-height: 288px; /* 白色容器400px扣除内边距40px后的80%（360px*0.8） */
+            height: auto;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 0 17px rgba(0, 0, 0, 0.10)); /* 17px模糊，10%透明度黑色投影 */
+            will-change: filter, transform; /* 启用硬件加速 */
+            transform: translateZ(0); /* 触发GPU渲染 */
+        }
+        
+        /* 默认第二张图样式（保持原有两步验证的尺寸和位置） */
+        .step1-container .tab-image:last-child {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%; /* 始终保持第一张图的50%宽度 */
+            height: auto; /* 保持与宽度的比例 */
+            z-index: 2; /* 置于上方 */
+            transform-origin: top left; /* 设置变换原点为左上角 */
+            filter: drop-shadow(0 0 17px rgba(0, 0, 0, 0.10)); /* 17px模糊，10%透明度黑色投影 */
+            will-change: filter, transform; /* 启用硬件加速 */
+        }
+        
+        /* SSO账号登录模块第二张图样式（自定义） */
+        .sso-container .tab-image:last-child {
+            top: 30%; /* 相对于父容器上边界向下移动30%的容器高度 */
+            left: 40%; /* 相对于父容器左边界向右移动40%的容器宽度 */
+            width: 80%; /* 放大到第一张图的80%宽度 */
+            filter: drop-shadow(0 0 17px rgba(0, 0, 0, 0.10)); /* 17px模糊，10%透明度黑色投影 */
+            will-change: filter, transform; /* 启用硬件加速 */
+            animation: fadeInScaleSSO 0.6s ease 200ms forwards; /* 使用自定义动画 */
+        }
+        
+        /* 登录方式管理模块第二张图样式 */
+        .login-method-container .tab-image:last-child {
+            top: 20%; /* 相对于父容器上边界向下移动20%的容器高度 */
+            left: 50%; /* 相对于父容器左边界向右移动50%的容器宽度 */
+            width: 90%; /* 缩小到第一张图的90%宽度 */
+            filter: drop-shadow(0 0 17px rgba(0, 0, 0, 0.10)); /* 17px模糊，10%透明度黑色投影 */
+            will-change: filter, transform; /* 启用硬件加速 */
+            animation: fadeInScaleSSO 0.6s ease 200ms forwards; /* 使用自定义动画 */
+        }
+        
+        /* 登录密码管理模块第二张图样式 */
+        .password-container .tab-image:last-child {
+            top: 40%; /* 相对于父容器上边界向下移动40%的容器高度 */
+            left: 50%; /* 相对于父容器左边界向右移动50%的容器宽度 */
+            width: 90%; /* 缩小到第一张图的90%宽度 */
+            filter: drop-shadow(0 0 17px rgba(0, 0, 0, 0.10)); /* 17px模糊，10%透明度黑色投影 */
+            will-change: filter, transform; /* 启用硬件加速 */
+            animation: fadeInScaleSSO 0.6s ease 200ms forwards; /* 使用自定义动画 */
+        }
+
+        .tab-content-inner p {
+            margin: 10px 0;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        /* 底部Tab区样式 */
+        .tab-section {
+            margin-top: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        /* Tab按钮样式 */
+        .tab-button {
+            background-color: rgba(31,35,41,0.10);
+            color: #1F2329;
+            border: none;
+            height: 28px;
+            padding: 0 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 28px;
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .tab-button:hover {
+            background-color: rgba(31,35,41,0.06);
+            color: #1F2329;
+        }
+        
+        .tab-button.active {
+            background-color: rgba(20, 86, 240, 0.2);
+            color: #1456F0;
+            font-weight: 500;
+        }
+        
+        /* 响应式设计（禁用对 tabs 间距与按钮尺寸的覆盖） */
+        @media (max-width: 768px) {
+        }
+        
+        /* 初始状态：页面内容隐藏，用于转场动画 */
+        .tab-content,
+        .tabs {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="account-security-container">
+        <!-- 内容部分 -->
+        <!-- 顶部标题区 -->
+        <div class="top-section">
+            <h1 class="main-title">
+                <button class="back-arrow" onclick="window.location.href='http://localhost:8000/'" title="返回安全功能总览">
+                    <img src="back-arrow.svg" alt="返回" />
+                </button>
+                账号安全介绍
+            </h1>
+            
+            <!-- 描述区域 -->
+            <div id="tab-description" class="description">
+                飞书提供全面的账号安全管理功能，保障用户账号安全，包括SSO账号登录、登录方式管理、登录密码管理、两步验证、登录有效期管理和账号申诉管理等。
+            </div>
+            
+            <!-- 底部Tab区 - 移动到这里 -->
+            <div class="tab-section">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="sso">SSO 账号登录</button>
+                    <button class="tab-button" data-tab="login-method">登录方式管理</button>
+                    <button class="tab-button" data-tab="password-management">登录密码管理</button>
+                    <button class="tab-button" data-tab="two-factor">两步验证</button>
+                    <button class="tab-button" data-tab="validity">登录有效期管理</button>
+                    <button class="tab-button" data-tab="appeal">账号申诉管理</button>
+                </div>
+            </div>
+            
+            
+        
+        <!-- 中间内容区 -->
+                <!-- 可切换的内容将在这里显示 -->
+                <div id="content-sso" class="tab-content active">
+                    <div class="tab-inner-title">SSO 账号登录</div>
+                    <div class="tab-inner-description">支持通过标准协议和企业已有身份平台打通，完成SSO单点登录，同时提供原生身份验证和两步验证等功能，增强账号安全性。</div>
+                    <div class="sub-tab-container">
+                        <button class="sub-tab-button active" data-sub-tab="sso-employee">员工端体验</button>
+                        <button class="sub-tab-button" data-sub-tab="sso-admin">管理员配置</button>
+                    </div>
+                    <div id="sub-content-sso-employee" class="sub-tab-content active">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="sso-step1.png" alt="SSO 步骤1" class="step-image" data-step="1">
+                                <img src="sso-step2.png" alt="SSO 步骤2" class="step-image" data-step="2">
+                                <img src="sso-step3.png" alt="SSO 步骤3" class="step-image" data-step="3">
+                                <img src="sso-step4.png" alt="SSO 步骤4" class="step-image active" data-step="4">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2" style="display: block;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3"></div>
+                                <div class="hotspot" data-step="3" data-next-step="4"></div>
+                                <div class="hotspot" data-step="4" data-next-step="1"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                            <div class="step-indicator" data-step="4"></div>
+                        </div>
+                    </div>
+                    <div id="sub-content-sso-admin" class="sub-tab-content">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="sso-admin-step1.png" alt="SSO 管理 步骤1" class="step-image active" data-step="1">
+                                <img src="sso-admin-step2.png" alt="SSO 管理 步骤2" class="step-image" data-step="2">
+                                <img src="sso-admin-step3.png" alt="SSO 管理 步骤3" class="step-image" data-step="3">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators admin-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-login-method" class="tab-content">
+                    <div class="tab-inner-title">登录方式管理</div>
+                    <div class="tab-inner-description">灵活管理登录方式，支持多种身份验证方式，包括密码登录、短信验证码登录等，满足不同场景的安全需求。</div>
+                    <div class="sub-tab-container">
+                        <button class="sub-tab-button active" data-sub-tab="login-method-employee">员工端体验</button>
+                        <button class="sub-tab-button" data-sub-tab="login-method-admin">管理员配置</button>
+                    </div>
+                    <div id="sub-content-login-method-employee" class="sub-tab-content active">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="login-method-step1.png" alt="登录方式 步骤1" class="step-image active" data-step="1">
+                                <img src="login-method-step2.png" alt="登录方式 步骤2" class="step-image" data-step="2">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2"></div>
+                                <div class="hotspot" data-step="2" data-next-step="1"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                        </div>
+                    </div>
+                    <div id="sub-content-login-method-admin" class="sub-tab-content">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="login-method-admin-step1.png" alt="登录方式 管理 步骤1" class="step-image active" data-step="1">
+                                <img src="login-method-admin-step2.png" alt="登录方式 管理 步骤2" class="step-image" data-step="2">
+                                <img src="login-method-admin-step3.png" alt="登录方式 管理 步骤3" class="step-image" data-step="3">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators admin-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-password-management" class="tab-content">
+                    <div class="tab-inner-title">登录密码管理</div>
+                    <div class="tab-inner-description">提供密码强度检测、定期密码更换提醒和密码重置功能，帮助用户维护安全的密码策略。</div>
+                    <div class="sub-tab-container">
+                        <button class="sub-tab-button active" data-sub-tab="password-employee">员工端体验</button>
+                        <button class="sub-tab-button" data-sub-tab="password-admin">管理员配置</button>
+                    </div>
+                    <div id="sub-content-password-employee" class="sub-tab-content active">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="password-step1.png" alt="密码管理 步骤1" class="step-image active" data-step="1">
+                                <img src="password-step2.png" alt="密码管理 步骤2" class="step-image" data-step="2">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2"></div>
+                                <div class="hotspot" data-step="2" data-next-step="1"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                        </div>
+                    </div>
+                    <div id="sub-content-password-admin" class="sub-tab-content">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="password-admin-step1.png" alt="密码管理 管理 步骤1" class="step-image active" data-step="1">
+                                <img src="password-admin-step2.png" alt="密码管理 管理 步骤2" class="step-image" data-step="2">
+                                <img src="password-admin-step3.png" alt="密码管理 管理 步骤3" class="step-image" data-step="3">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators admin-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-two-factor" class="tab-content">
+                    <div class="tab-inner-title">两步验证</div>
+                    <div class="tab-inner-description">启用两步验证后，登录时需要输入密码和动态验证码，有效防止账号被盗，提升账号安全性。</div>
+                    <!-- 1. 按钮容器 -->
+                    <div class="sub-tab-container">
+                        <button class="sub-tab-button active" data-sub-tab="employee">员工端体验</button>
+                        <button class="sub-tab-button" data-sub-tab="admin">管理员配置</button>
+                    </div>
+                    
+                    <!-- 2. 图片容器 -->
+                    <div id="sub-content-employee" class="sub-tab-content active">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="two-factor-step1.png" alt="两步验证步骤1" class="step-image active" data-step="1">
+                                <img src="two-factor-step2.png" alt="两步验证步骤2" class="step-image" data-step="2">
+                                <img src="two-factor-step3.png" alt="两步验证步骤3" class="step-image" data-step="3">
+                                <img src="two-factor-step4.png" alt="两步验证步骤4" class="step-image" data-step="4">
+                            </div>
+                            <!-- 热区容器 -->
+                            <div class="hotspots-container">
+                                <!-- 步骤1热区 -->
+                                <div class="hotspot step1-hotspot" data-next-step="2" data-step="1" style="display: block;"></div>
+                                <!-- 步骤2热区 -->
+                                <div class="hotspot step2-hotspot" data-next-step="3" data-step="2" style="display: none;"></div>
+                                <!-- 步骤3热区 -->
+                                <div class="hotspot step3-hotspot" data-next-step="4" data-step="3" style="display: none;"></div>
+                                <!-- 步骤4热区 -->
+                                <div class="hotspot step4-hotspot" data-next-step="1" data-step="4" style="display: none;"></div>
+                            </div>
+                        </div>
+                        <!-- 导航点容器（移入子内容内部，规范间距） -->
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                            <div class="step-indicator" data-step="4"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- 管理员配置内容 - 只在切换时显示 -->
+                    <div id="sub-content-admin" class="sub-tab-content">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="admin-config-step1.png" alt="管理员配置步骤1" class="step-image active" data-step="1">
+                                <img src="admin-config-step2.png" alt="管理员配置步骤2" class="step-image" data-step="2">
+                                <img src="admin-config-step3.png" alt="管理员配置步骤3" class="step-image" data-step="3">
+                            </div>
+                            <!-- 热区容器 -->
+                            <div class="hotspots-container">
+                                <!-- 步骤1热区 -->
+                                <div class="hotspot step1-hotspot" data-next-step="2" data-step="1"></div>
+                                <!-- 步骤2热区 -->
+                                <div class="hotspot step2-hotspot" data-next-step="3" data-step="2"></div>
+                                <!-- 步骤3热区 -->
+                                <div class="hotspot step3-hotspot" data-next-step="1" data-step="3"></div>
+                            </div>
+                        </div>
+                        <!-- 管理员配置的导航点容器（移入子内容内部） -->
+                        <div class="step-indicators admin-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增小tab切换器的CSS样式 -->
+                <style>
+                    /* 白框样式 - 主内容区域 */
+                    .tab-content {
+                        padding: 20px 20px 0 20px;
+                        box-sizing: border-box;
+                        margin-top: 20px;
+                    }
+                    .tab-inner-title {
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: #1F2329;
+                        margin-bottom: 6px;
+                        text-align: left;
+                    }
+                    .tab-inner-description {
+                        font-size: 14px;
+                        line-height: 1.6;
+                        color: #646A73;
+                        margin-bottom: 20px;
+                        text-align: left;
+                    }
+                    
+                    /* 小tab切换器样式 - 按钮容器 */
+                    .sub-tab-container {
+                        display: inline-flex;
+                        gap: 0;
+                        margin-bottom: 20px;
+                        margin-top: 0;
+                        background-color: #F3F4F6;
+                        border-radius: 6px;
+                        padding: 1px;
+                        overflow: hidden;
+                        width: max-content;
+                        height: 32px;
+                        align-items: center;
+                    }
+                    
+                    .sub-tab-button {
+                        background-color: transparent;
+                        color: #6B7280;
+                        border: none;
+                        padding: 0 12px;
+                        height: 32px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 32px;
+                        transition: all 0.2s ease;
+                    }
+                    
+                    .sub-tab-button:hover {
+                        background-color: rgba(0,0,0,0.02);
+                        color: #4B5563;
+                    }
+                    
+                    .sub-tab-button.active {
+                        background-color: #FFFFFF;
+                        color: #1F2937;
+                        border: none;
+                        box-shadow: inset 0 0 0 1px #D1D5DB, 0 1px 2px rgba(0,0,0,0.04);
+                        border-radius: 6px;
+                    }
+                    
+                    /* 小tab内容样式 */
+                    .sub-tab-content {
+                        display: none;
+                        margin-bottom: 0;
+                    }
+                    
+                    .sub-tab-content.active {
+                        display: block;
+                    }
+                </style>
+                <div id="content-validity" class="tab-content">
+                    <div class="tab-inner-title">登录有效期管理</div>
+                    <div class="tab-inner-description">设置登录有效期，超过有效期后需要重新登录，减少账号长时间处于登录状态带来的安全风险。</div>
+                    <div class="sub-tab-container">
+                        <button class="sub-tab-button active" data-sub-tab="validity-employee">员工端体验</button>
+                        <button class="sub-tab-button" data-sub-tab="validity-admin">管理员配置</button>
+                    </div>
+                    <div id="sub-content-validity-employee" class="sub-tab-content active">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="validity-step1.png" alt="有效期 步骤1" class="step-image active" data-step="1">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="1"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                        </div>
+                    </div>
+                    <div id="sub-content-validity-admin" class="sub-tab-content">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="validity-admin-step1.png" alt="有效期 管理 步骤1" class="step-image active" data-step="1">
+                                <img src="validity-admin-step3.png" alt="有效期 管理 步骤3" class="step-image" data-step="3">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="3"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators admin-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-appeal" class="tab-content">
+                    <div class="tab-inner-title">账号申诉管理</div>
+                    <div class="tab-inner-description">当账号遇到异常情况时，提供便捷的申诉渠道，快速解决账号问题，保障用户的正常使用。</div>
+                    <div class="sub-tab-container">
+                        <button class="sub-tab-button active" data-sub-tab="appeal-employee">员工端体验</button>
+                        <button class="sub-tab-button" data-sub-tab="appeal-admin">管理员配置</button>
+                    </div>
+                    <div id="sub-content-appeal-employee" class="sub-tab-content active">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="appeal-step1.png" alt="申诉 步骤1" class="step-image active" data-step="1">
+                                <img src="appeal-step2.png" alt="申诉 步骤2" class="step-image" data-step="2">
+                                <img src="appeal-step3.png" alt="申诉 步骤3" class="step-image" data-step="3">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                    <div id="sub-content-appeal-admin" class="sub-tab-content">
+                        <div class="two-factor-images interactive">
+                            <div class="image-container">
+                                <img src="appeal-admin-step1.png" alt="申诉 管理 步骤1" class="step-image active" data-step="1">
+                                <img src="appeal-admin-step2.png" alt="申诉 管理 步骤2" class="step-image" data-step="2">
+                                <img src="appeal-admin-step3.png" alt="申诉 管理 步骤3" class="step-image" data-step="3">
+                            </div>
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                            </div>
+                        </div>
+                        <div class="step-indicators admin-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    
+    <script>
+        // 解析URL参数
+        function getQueryParam(name) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        // 实现tab切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            var tabButtons = document.querySelectorAll('.tab-button');
+            var tabContents = document.querySelectorAll('.tab-content');
+            var tabDescription = document.getElementById('tab-description');
+            function initBasicInteractive(contentEl) {
+                if (!contentEl) return;
+                var stepImages = contentEl.querySelectorAll('.step-image');
+                var stepIndicators = contentEl.querySelectorAll('.step-indicator');
+                var hotspots = contentEl.querySelectorAll('.hotspot');
+                function showHotspotsForStep(step) {
+                    hotspots.forEach(function(h) { h.style.display = (h.getAttribute('data-step') == step) ? 'block' : 'none'; });
+                }
+                function switchToStep(step) {
+                    stepImages.forEach(function(img) { img.classList.remove('active'); });
+                    var targetImage = contentEl.querySelector('.step-image[data-step="' + step + '"]');
+                    if (targetImage) targetImage.classList.add('active');
+                    stepIndicators.forEach(function(ind) { ind.classList.remove('active'); });
+                    var targetIndicator = contentEl.querySelector('.step-indicator[data-step="' + step + '"]');
+                    if (targetIndicator) targetIndicator.classList.add('active');
+                    showHotspotsForStep(step);
+                }
+                hotspots.forEach(function(h) {
+                    h.addEventListener('click', function() {
+                        var step = this.getAttribute('data-step');
+                        var n = this.getAttribute('data-next-step');
+                        var isLastStep = false;
+                        
+                        // 确保步骤值为字符串类型
+                        step = String(step);
+                        
+                        // 检查是否为需要显示弹窗的步骤
+                        // 获取所有子内容元素
+                        var validityAdminContent = document.getElementById('sub-content-validity-admin');
+                        var ssoAdminContent = document.getElementById('sub-content-sso-admin');
+                        var loginMethodEmployeeContent = document.getElementById('sub-content-login-method-employee');
+                        var loginMethodAdminContent = document.getElementById('sub-content-login-method-admin');
+                        var passwordEmployeeContent = document.getElementById('sub-content-password-employee');
+                        var passwordAdminContent = document.getElementById('sub-content-password-admin');
+                        var twoFactorAdminContent = document.getElementById('sub-content-admin');
+                        var appealEmployeeContent = document.getElementById('sub-content-appeal-employee');
+                        var appealAdminContent = document.getElementById('sub-content-appeal-admin');
+                        
+                        // 获取登录有效期管理员工端内容
+                        var validityEmployeeContent = document.getElementById('sub-content-validity-employee');
+                        
+                        // 检查当前点击的热点是否在相应的内容中且为最后一步
+                        if ((validityAdminContent && validityAdminContent.contains(this) && step === '3') ||
+                            (validityEmployeeContent && validityEmployeeContent.contains(this) && step === '1') || // 登录有效期管理员工端只有一步
+                            (ssoAdminContent && ssoAdminContent.contains(this) && step === '3') ||
+                            (loginMethodEmployeeContent && loginMethodEmployeeContent.contains(this) && step === '2') ||
+                            (loginMethodAdminContent && loginMethodAdminContent.contains(this) && step === '3') ||
+                            (passwordEmployeeContent && passwordEmployeeContent.contains(this) && step === '2') ||
+                            (passwordAdminContent && passwordAdminContent.contains(this) && step === '3') ||
+                            (twoFactorAdminContent && twoFactorAdminContent.contains(this) && step === '3') ||
+                            (appealEmployeeContent && appealEmployeeContent.contains(this) && step === '3') ||
+                            (appealAdminContent && appealAdminContent.contains(this) && step === '3')) {
+                            isLastStep = true;
+                        }
+                        
+                        // 如果是步骤4或任何模块的最后一步，则显示弹窗
+                        if (step === '4' || isLastStep) {
+                            // 确保弹窗元素存在
+                            var popup = document.getElementById('process-end-popup');
+                            if (popup) {
+                                // 检查当前是否处于管理员配置流程中
+                                const adminBtn = document.getElementById('admin-config-btn');
+                                if (adminBtn) {
+                                    // 检查当前点击的热点是否在管理员配置内容中
+                                    const isInAdminFlow = validityAdminContent && validityAdminContent.contains(this) || 
+                                                         ssoAdminContent && ssoAdminContent.contains(this) ||
+                                                         loginMethodAdminContent && loginMethodAdminContent.contains(this) ||
+                                                         passwordAdminContent && passwordAdminContent.contains(this) ||
+                                                         twoFactorAdminContent && twoFactorAdminContent.contains(this) ||
+                                                         appealAdminContent && appealAdminContent.contains(this);
+                                    
+                                    // 如果在管理员流程中，隐藏"管理员配置"按钮
+                                    adminBtn.style.display = isInAdminFlow ? 'none' : 'inline-block';
+                                }
+                                
+                                popup.style.display = 'flex';
+                            }
+                            return;
+                        }
+                        if (n) switchToStep(n);
+                    });
+                });
+                
+                // 移除调试用的红色边框
+                hotspots.forEach(function(h) {
+                    h.style.border = '';
+                });
+                stepIndicators.forEach(function(ind) { ind.addEventListener('click', function() { var s = this.getAttribute('data-step'); if (s) switchToStep(s); }); });
+                switchToStep(1);
+            }
+            function initScopedSubTab(contentEl) {
+                var container = contentEl.querySelector('.sub-tab-container');
+                if (!container) { initBasicInteractive(contentEl); return; }
+                var buttons = container.querySelectorAll('.sub-tab-button');
+                var subContents = contentEl.querySelectorAll('.sub-tab-content');
+                function activateSub(id) {
+                    subContents.forEach(function(sc){ sc.classList.remove('active'); });
+                    var target = contentEl.querySelector('#sub-content-' + id);
+                    if (target) {
+                        target.classList.add('active');
+                        initBasicInteractive(target);
+                    }
+                }
+                buttons.forEach(function(btn){
+                    btn.addEventListener('click', function(){
+                        buttons.forEach(function(b){ b.classList.remove('active'); });
+                        btn.classList.add('active');
+                        var sid = btn.getAttribute('data-sub-tab');
+                        activateSub(sid);
+                    });
+                });
+                var activeBtn = container.querySelector('.sub-tab-button.active');
+                if (activeBtn) activateSub(activeBtn.getAttribute('data-sub-tab'));
+            }
+            
+            // 定义每个tab对应的描述文案
+            var tabDescriptions = {
+                'sso': '支持通过标准协议和企业已有身份平台打通，完成SSO单点登录，同时提供原生身份验证和两步验证等功能，增强账号安全性。',
+                'login-method': '灵活管理登录方式，支持多种身份验证方式，包括密码登录、短信验证码登录等，满足不同场景的安全需求。',
+                'password-management': '提供密码强度检测、定期密码更换提醒和密码重置功能，帮助用户维护安全的密码策略。',
+                'two-factor': '启用两步验证后，登录时需要输入密码和动态验证码，有效防止账号被盗，提升账号安全性。',
+                'validity': '设置登录有效期，超过有效期后需要重新登录，减少账号长时间处于登录状态带来的安全风险。',
+                'appeal': '当账号遇到异常情况时，提供便捷的申诉渠道，快速解决账号问题，保障用户的正常使用。'
+            };
+            
+            // 为每个tab按钮添加点击事件
+            tabButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var tabId = button.getAttribute('data-tab');
+                    
+                    // 移除所有按钮的active类
+                    tabButtons.forEach(function(btn) { btn.classList.remove('active'); });
+                    // 添加当前按钮的active类
+                    button.classList.add('active');
+                    
+                    // 隐藏所有内容
+                    tabContents.forEach(function(content) { content.classList.remove('active'); });
+                    // 显示当前内容
+                var currentContent = document.getElementById('content-' + tabId);
+                if (currentContent) {
+                    currentContent.classList.add('active');
+                    initScopedSubTab(currentContent);
+                }
+                    
+                    // 更新描述文案
+                    if (tabDescription && tabDescriptions[tabId]) {
+                        tabDescription.textContent = tabDescriptions[tabId];
+                    }
+                });
+            });
+            
+            // 检查URL参数，自动切换到指定tab
+            var tabParam = getQueryParam('tab');
+            if (tabParam) {
+                // 找到对应的tab按钮并触发点击事件
+                var targetButton = document.querySelector('.tab-button[data-tab="' + tabParam + '"]');
+                if (targetButton) {
+                    targetButton.click();
+                }
+            }
+            var initialActive = document.querySelector('.tab-content.active');
+            initScopedSubTab(initialActive);
+        });
+    </script>
+    <script>
+        // 页面加载完成后执行转场动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查是否有转场卡片信息
+            var transitionCardInfo = sessionStorage.getItem('transitionCardInfo');
+            console.log('Transition card info in detail page:', transitionCardInfo);
+            
+            if (transitionCardInfo) {
+                var cardInfo = JSON.parse(transitionCardInfo);
+                console.log('Parsed card info:', cardInfo);
+                
+                // 获取页面容器
+                var container = document.querySelector('.account-security-container');
+                
+                // 创建临时动画元素
+                var tempCard = document.createElement('div');
+                tempCard.style.position = 'fixed';
+                tempCard.style.left = cardInfo.x + 'px';
+                tempCard.style.top = cardInfo.y + 'px';
+                tempCard.style.width = cardInfo.width + 'px';
+                tempCard.style.height = cardInfo.height + 'px';
+                tempCard.style.backgroundColor = cardInfo.backgroundColor;
+                tempCard.style.borderRadius = cardInfo.borderRadius;
+                tempCard.style.boxShadow = '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)';
+                tempCard.style.zIndex = '9999';
+                tempCard.style.pointerEvents = 'none';
+                tempCard.style.overflow = 'hidden';
+                
+                // 添加卡片内容
+                    tempCard.innerHTML = '                    <h3 style="margin: 20px; font-size: 24px; color: white;">' + cardInfo.title + '</h3>                    <p style="margin: 0 20px 20px; font-size: 16px; color: rgba(255,255,255,0.8);">' + cardInfo.description + '</p>                ';
+                
+                // 添加到页面
+                document.body.appendChild(tempCard);
+                console.log('Temp card added to body');
+                
+                // 直接显示页面内容，不执行复杂动画
+                // 确保页面内容可见
+                var tabContents = document.querySelectorAll('.tab-content');
+                for (var i = 0; i < tabContents.length; i++) {
+                    tabContents[i].style.opacity = '1';
+                }
+                var tabs = document.querySelectorAll('.tabs');
+                for (var j = 0; j < tabs.length; j++) {
+                    tabs[j].style.opacity = '1';
+                }
+                
+                // 移除临时元素
+                setTimeout(function() {
+                    if (tempCard.parentNode) {
+                        document.body.removeChild(tempCard);
+                    }
+                    // 清除sessionStorage
+                    sessionStorage.removeItem('transitionCardInfo');
+                }, 300);
+            } else {
+                // 如果没有转场信息，直接显示页面内容
+                console.log('No transition info, showing page content directly');
+                var tabContents = document.querySelectorAll('.tab-content');
+                for (var i = 0; i < tabContents.length; i++) {
+                    tabContents[i].style.opacity = '1';
+                }
+                var tabs = document.querySelectorAll('.tabs');
+                for (var j = 0; j < tabs.length; j++) {
+                    tabs[j].style.opacity = '1';
+                }
+            }
+        });
+    </script>
+
+
+    
+    <style>
+        /* 弹窗样式 */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .popup-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            width: 480px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .popup-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .popup-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #1456F0;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 8px;
+        }
+        
+        .popup-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            flex: 1;
+            text-align: left;
+        }
+        
+        .popup-close {
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .popup-close:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .popup-message {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 24px;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        .popup-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        .popup-admin-btn {
+            background-color: white;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-admin-btn:hover {
+            border-color: #336DF4;
+            color: #336DF4;
+        }
+        
+        .popup-next-btn {
+            background-color: #1456F0;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .popup-next-btn:hover {
+            background-color: #336DF4;
+        }
+    </style>
+    
+    <script>
+        // 流程结束弹窗功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取弹窗元素
+            const popup = document.getElementById('process-end-popup');
+            const closeBtn = document.querySelector('.popup-close');
+            const adminBtn = document.getElementById('admin-config-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            // 关闭弹窗
+            function closePopup() {
+                popup.style.display = 'none';
+            }
+            
+            // 点击关闭按钮
+            closeBtn.addEventListener('click', closePopup);
+            
+            // 点击管理员配置按钮 - 根据当前主tab切换到对应管理员配置子标签
+            adminBtn.addEventListener('click', function() {
+                // 获取当前激活的主tab
+                const activeMainTab = document.querySelector('.tab-button.active').dataset.tab;
+                
+                // 处理两步验证的特殊情况，其管理员子标签值为"admin"而非"two-factor-admin"
+                let adminSubTabValue;
+                if (activeMainTab === 'two-factor') {
+                    adminSubTabValue = 'admin';
+                } else {
+                    // 其他功能使用标准命名方式 (如 sso-admin, login-method-admin)
+                    adminSubTabValue = activeMainTab + '-admin';
+                }
+                
+                const adminTabBtn = document.querySelector(`.sub-tab-button[data-sub-tab="${adminSubTabValue}"]`);
+                
+                if (adminTabBtn) {
+                    adminTabBtn.click(); // 触发管理员子tab切换
+                    // 激活管理员流程第一步
+                    setTimeout(() => {
+                        const firstStepIndicator = document.querySelector(`.admin-indicators .step-indicator[data-step="1"]`);
+                        if (firstStepIndicator) firstStepIndicator.click();
+                    }, 100);
+                }
+                closePopup();
+            });
+            
+            // 点击下一个按钮 - 跳转到下一个主标签
+            nextBtn.addEventListener('click', function() {
+                // 获取所有主标签按钮，保持DOM顺序
+                const allTabButtons = Array.from(document.querySelectorAll('.tab-button'));
+                // 获取当前激活的主标签
+                const activeTabButton = document.querySelector('.tab-button.active');
+                
+                if (activeTabButton && allTabButtons.length > 0) {
+                    // 找到当前激活标签在数组中的索引
+                    const currentIndex = allTabButtons.indexOf(activeTabButton);
+                    // 计算下一个标签的索引（循环到第一个如果当前是最后一个）
+                    const nextIndex = (currentIndex + 1) % allTabButtons.length;
+                    // 获取下一个标签按钮
+                    const nextTabButton = allTabButtons[nextIndex];
+                    
+                    if (nextTabButton) {
+                        nextTabButton.click(); // 触发主标签切换
+                        // 激活第一个子标签和第一步
+                        setTimeout(() => {
+                            // 获取下一个标签的内容区
+                            const nextTabId = nextTabButton.dataset.tab;
+                            const nextTabContent = document.getElementById(`content-${nextTabId}`);
+                            if (nextTabContent) {
+                                // 激活第一个子标签
+                                const firstSubTabBtn = nextTabContent.querySelector('.sub-tab-button:first-child');
+                                if (firstSubTabBtn) firstSubTabBtn.click();
+                                
+                                // 激活第一步
+                                const firstStepIndicator = nextTabContent.querySelector('.step-indicators .step-indicator[data-step="1"]');
+                                if (firstStepIndicator) firstStepIndicator.click();
+                            }
+                        }, 100);
+                    }
+                }
+                closePopup();
+            });
+            
+            // 点击弹窗外部关闭
+            popup.addEventListener('click', function(e) {
+                if (e.target === popup) {
+                    closePopup();
+                }
+            });
+        });
+    </script>
+    
+    <!-- 流程结束弹窗 -->
+    <div id="process-end-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <div class="popup-icon">i</div>
+                <div class="popup-title">提示</div>
+                <div class="popup-close">×</div>
+            </div>
+            <div class="popup-message">当前流程已结束，您可以继续体验管理员配置或其他功能。</div>
+            <div class="popup-buttons">
+                <button id="admin-config-btn" class="popup-admin-btn">管理员配置</button>
+                <button id="next-btn" class="popup-next-btn">下一个</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,670 @@
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 正视图卡片布局专用样式 */
+.slant-cards-page {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #EBF1FF !important; /* 设置新的背景色 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 移除透视效果 */
+    overflow: visible;
+    /* 移除黑色背景层 */
+    background-image: none;
+}
+
+/* 移除页面背景光效 */
+.slant-cards-page::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: none;
+    z-index: -1;
+}
+
+.slant-cards-page::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    z-index: -1;
+}
+
+.cards-container {
+    position: relative;
+    width: 100%;
+    max-width: 1400px; /* 增加最大宽度以适应位移 */
+    height: auto;
+    min-height: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    overflow: visible;
+    flex-wrap: wrap;
+}
+
+/* 卡片组样式 */
+.card-group {
+    position: relative;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px; /* 设置卡片间距为16px */
+    z-index: 5;
+}
+
+/* 卡片链接样式 */
+.card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+}
+
+/* 卡片通用样式修改 */
+.slant-card {
+    position: static;
+    width: 380px;
+    height: auto;
+    padding: 20px;
+    background: #ffffff; /* 修改背景色为白色 */
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    z-index: 5;
+    position: relative;
+    border: none; /* 确保没有默认边框 */
+    overflow: visible; /* 允许伪元素超出卡片范围 */
+}
+
+/* 卡片hover效果 */
+.slant-card:hover {
+    box-shadow: 0 0 40px rgba(34, 83, 174, 0.15); /* 加重投影 */
+    transform: scale(1.02); /* 稍微放大 */
+    z-index: 15; /* 确保hover的卡片在最上层 */
+}
+
+/* 修复中间卡片hover时的位移问题 */
+@media (min-width: 1025px) {
+    /* 左侧中间卡片hover效果 */
+    .left-group-middle:hover {
+        transform: translateX(-60px) scale(1.02); /* 保留水平位移并添加缩放 */
+    }
+    
+    /* 右侧中间卡片hover效果 */
+    .right-group-middle:hover {
+        transform: translateX(60px) scale(1.02); /* 保留水平位移并添加缩放 */
+    }
+}
+
+/* 移除渐变边框伪元素 */
+
+/* 左侧卡片组 */
+.left-group {
+    transform: translateX(-80px);
+}
+
+/* 右侧卡片组 */
+.right-group {
+    transform: translateX(80px);
+}
+
+/* 中间卡片向外侧突出效果（仅在大于1024px时生效） */
+@media (min-width: 1025px) {
+    /* 左侧中间卡片向左突出 */
+    .left-group-middle {
+        transform: translateX(-60px);
+        z-index: 10;
+    }
+    
+    /* 右侧中间卡片向右突出 */
+    .right-group-middle {
+        transform: translateX(60px);
+        z-index: 10;
+    }
+}
+
+/* 连接线样式 */
+.connection-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.connection-lines line {
+    filter: drop-shadow(0 0 5px rgba(147, 51, 234, 0.5));
+    transition: stroke-width 0.3s ease, opacity 0.3s ease;
+}
+
+/* 中心Logo容器样式 */
+.center-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 中心Logo图片样式 */
+.center-logo-image {
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+    /* 移除所有滤镜效果，显示原始图片状态 */
+    /* 移除悬停效果，保持稳定状态 */
+}
+
+
+
+.slant-cards-page .card-header {
+    display: flex;
+    align-items: center; /* 上下居中对齐 */
+    gap: 16px; /* 修改icon和文字的距离为16px */
+    margin-bottom: 16px; /* 修改卡片头部和标签之间的间距为16px */
+    padding-bottom: 10px;
+    border-bottom: 1px solid #CCDCFF; /* 修改底部线颜色为CCDCFF */
+    flex-wrap: wrap;
+}
+
+/* 移除.card-icon容器，将样式直接应用到svg-icon */
+
+.slant-cards-page .svg-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    overflow: hidden;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.slant-cards-page .card-text-container {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px; /* 缩小主副标题高度间距 */
+}
+
+.slant-cards-page .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #002A8F;
+    margin: 0;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+}
+
+.slant-cards-page .card-description {
+    font-size: 14px;
+    color: #546A9E;
+    margin: 0;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+/* 卡片标签样式 - 平铺展示所有功能项 */
+.slant-cards-page .card-tags {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 确保卡片容器允许标签容器扩展宽度 */
+.slant-card {
+    position: relative;
+    width: 380px;
+    height: auto;
+    padding: 20px;
+    background: #ffffff; /* 修改背景色为白色 */
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    z-index: 5;
+    border: none; /* 确保没有默认边框 */
+    overflow: hidden; /* 防止内容溢出 */
+    display: flex;
+    flex-direction: column;
+    /* 添加蓝紫色投影效果 */
+    box-shadow: 0 0 30px rgba(34, 83, 174, 0.1);
+}
+
+/* Chrome, Safari和Opera隐藏滚动条 */
+.slant-cards-page .card-tags::-webkit-scrollbar {
+    display: none;
+}
+
+.slant-cards-page .card-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    color: #546A9E;
+    padding: 6px 12px;
+    border-radius: 8px; /* 修改圆角为8px */
+    text-transform: none;
+    letter-spacing: normal;
+    box-shadow: none; /* 确保tag投影已移除 */
+    position: relative;
+    transition: all 0.2s ease;
+    background: #EAEAF8; /* 标签颜色改为EAEAF8 */
+    flex-shrink: 0; /* 防止标签被压缩 */
+    white-space: nowrap; /* 防止文案换行 */
+    border: none; /* 确保没有边框 */
+}
+
+/* 移除标签渐变描边 */
+.slant-cards-page .card-tag::after {
+    display: none;
+}
+
+/* 标签对钩图标 */
+.slant-cards-page .card-tag::before {
+    content: '✓';
+    margin-right: 5px;
+    font-size: 8px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 12px;
+    height: 12px;
+    background-color: #5B65F5;
+    border-radius: 50%;
+    color: white;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #EBF1FF; /* 设置新的背景色 */
+    background-image: none;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* 移除默认的20px内边距 */
+    position: relative;
+    overflow: hidden;
+    color: #546A9E;
+}
+
+/* 移除背景光效 */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: none;
+    animation: none;
+    z-index: -1;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    z-index: -1;
+}
+
+/* 动态光效动画 */
+@keyframes backgroundPulse {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1) rotate(180deg);
+        opacity: 0.7;
+    }
+}
+
+/* 移除了与发光球体布局相关的主容器、中心区域和左右卡片容器样式 */
+
+/* 移除了与安全卡片（发光球体布局）相关的样式 */
+
+/* 卡片头部 */
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.card-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.card-icon {
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #E3F2FD;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #2196F3;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.svg-icon {
+    width: 40px;
+    height: 40px;
+    display: block;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #002A8F;
+    margin-bottom: 4px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.card-description {
+    font-size: 12px;
+    color: #546A9E;
+    line-height: 1.3;
+}
+
+/* 卡片内容 */
+.card-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+/* 详情页tab内容默认隐藏，用于转场动画 */
+.tab-content {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tabs {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feature-item {
+    font-size: 12px;
+    color: #546A9E;
+    padding: 3px 6px;
+    border-radius: 4px;
+    background-color: #f5f7fa;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: fit-content;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.feature-item:hover {
+    background-color: #e3f2fd;
+}
+
+/* 连接线条 */
+.connection-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .cards-container {
+        flex-direction: column;
+        height: auto;
+        gap: 16px;
+        padding: 20px;
+        position: relative;
+    }
+
+    .left-group,
+    .right-group {
+        transform: none;
+        margin: 0;
+        width: 100%;
+        max-width: 450px;
+        gap: 16px;
+    }
+
+    /* 移除中间卡片的突出效果 */
+    .left-group-middle,
+    .right-group-middle {
+        transform: none;
+        z-index: 5;
+    }
+
+    .slant-card {
+        width: 100%;
+        max-width: 380px;
+    }
+
+    .center-logo {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        margin: 0;
+        z-index: 1;
+    }
+
+    .center-logo-image {
+        width: 300px;
+        height: 300px;
+        opacity: 0.5;
+    }
+}
+
+/* 双图片布局通用样式 */
+.dual-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    position: relative;
+}
+
+.main-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 80%;
+    width: 100%;
+    height: 100%;
+}
+
+.main-image {
+    display: block;
+    max-width: 100%;
+    max-height: 288px; /* 白色容器高度400px扣除内边距40px后的80%（360px*0.8） */
+    width: auto;
+    height: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    transform: translateZ(0);
+}
+
+.overlay-image {
+    position: absolute;
+    width: 50%;
+    height: auto;
+    max-width: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    transform: translate(110%, 170%);
+    z-index: 1;
+    transform-style: preserve-3d;
+}
+
+/* 图二位置微调类 */
+.overlay-top-left {
+    transform: translate(-110%, -170%);
+}
+
+.overlay-top-right {
+    transform: translate(110%, -170%);
+}
+
+.overlay-bottom-left {
+    transform: translate(-110%, 170%);
+}
+
+.overlay-bottom-right {
+    transform: translate(110%, 170%);
+}
+
+.overlay-center {
+    transform: translate(0, 0);
+}
+
+.overlay-top-center {
+    transform: translate(0, -150%);
+}
+
+.overlay-bottom-center {
+    transform: translate(0, 150%);
+}
+
+.overlay-left-center {
+    transform: translate(-150%, 0);
+}
+
+.overlay-right-center {
+    transform: translate(150%, 0);
+}
+
+/* 动画效果 */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 包含translate的淡入缩放动画 */
+@keyframes fadeInScaleWithTranslate {
+    from {
+        opacity: 0;
+        transform: translate(110%, 170%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(110%, 170%) scale(1);
+    }
+}
+
+/* SSO模块专用的淡入缩放动画（无translate） */
+@keyframes fadeInScaleSSO {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeInScale 0.6s ease forwards;
+}
+
+/* 图片淡入动画 - 与首页一致 */
+.tab-image {
+    opacity: 0; /* 初始状态完全隐藏 */
+    animation: fadeInScale 0.6s ease forwards;
+}
+
+/* 第二张图片延迟动画 - 结合translate和scale */
+.step1-container .tab-image:last-child {
+    opacity: 0; /* 初始状态完全隐藏 */
+    animation: fadeInScaleWithTranslate 0.6s ease 200ms forwards;
+}
+
+/* 延迟动画 */
+.security-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.security-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.security-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.security-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.security-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.security-card:nth-child(6) {
+    animation-delay: 0.6s;
+}

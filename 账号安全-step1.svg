@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="288" viewBox="0 0 400 288">
+  <rect width="400" height="288" fill="#E3F2FD" rx="8"/>
+  <circle cx="200" cy="100" r="60" fill="#2196F3"/>
+  <text x="200" y="170" font-family="Arial, sans-serif" font-size="24" fill="#002A8F" text-anchor="middle">账号安全</text>
+  <text x="200" y="200" font-family="Arial, sans-serif" font-size="14" fill="#546A9E" text-anchor="middle">主图 - 后续替换为实际图片</text>
+</svg>

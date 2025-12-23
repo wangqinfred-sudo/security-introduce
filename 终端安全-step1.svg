@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="288" viewBox="0 0 400 288">
+  <rect width="400" height="288" fill="#E8F5E9" rx="8"/>
+  <rect x="140" y="80" width="120" height="100" fill="#4CAF50" rx="4"/>
+  <rect x="180" y="180" width="40" height="40" fill="#388E3C" rx="2"/>
+  <text x="200" y="260" font-family="Arial, sans-serif" font-size="24" fill="#002A8F" text-anchor="middle">终端安全</text>
+  <text x="200" y="290" font-family="Arial, sans-serif" font-size="14" fill="#546A9E" text-anchor="middle">主图 - 后续替换为实际图片</text>
+</svg>

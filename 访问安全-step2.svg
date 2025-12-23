@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 200 150">
+  <rect width="200" height="150" fill="#FFFFFF" rx="4" stroke="#E8EAF6" stroke-width="2"/>
+  <rect x="20" y="30" width="160" height="80" fill="#E8EAF6" rx="4"/>
+  <text x="100" y="60" font-family="Arial, sans-serif" font-size="16" fill="#002A8F" text-anchor="middle">访问控制</text>
+  <text x="100" y="85" font-family="Arial, sans-serif" font-size="12" fill="#546A9E" text-anchor="middle">覆盖说明图</text>
+  <text x="100" y="105" font-family="Arial, sans-serif" font-size="10" fill="#546A9E" text-anchor="middle">- 后续替换为实际图片 -</text>
+</svg>

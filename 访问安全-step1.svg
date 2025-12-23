@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="288" viewBox="0 0 400 288">
+  <rect width="400" height="288" fill="#E8EAF6" rx="8"/>
+  <rect x="150" y="80" width="100" height="100" fill="#3F51B5" rx="4"/>
+  <polygon points="200,50 250,100 150,100" fill="#3F51B5"/>
+  <text x="200" y="140" font-family="Arial, sans-serif" font-size="24" fill="white" text-anchor="middle">访问安全</text>
+  <text x="200" y="210" font-family="Arial, sans-serif" font-size="14" fill="#546A9E" text-anchor="middle">主图 - 后续替换为实际图片</text>
+</svg>

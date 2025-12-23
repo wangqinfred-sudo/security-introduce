@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终端安全介绍</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 终端安全介绍页面特定样式 */
+        .terminal-security-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-height: 700px;
+        }
+        
+        .back-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            margin-right: 8px;
+            border-radius: 50%;
+            background-color: transparent;
+            color: #002A8F;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            vertical-align: middle;
+        }
+        .back-arrow img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+        
+        .back-arrow svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+        }
+        
+        .back-arrow:hover {
+            background-color: #f5f7fa;
+        }
+        
+        .content-section {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        
+        .text-content {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .main-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #002A8F;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #546A9E;
+            margin-bottom: 30px;
+        }
+        
+        .feature-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .feature-button {
+            background-color: #f5f7fa;
+            color: #333;
+            border: 1px solid #e3e9f0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-button:hover {
+            background-color: #e3e9f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .flowchart-container {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 移除流程图的背景渐变 */
+        
+        .flowchart-branches {
+            display: flex;
+            gap: 20px;
+            z-index: 1;
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 48%;
+        }
+        
+        .branch > div {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .branch-title {
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .sso-branch .branch-title {
+            background-color: #3370FF;
+        }
+        
+        .feishu-branch .branch-title {
+            background-color: #00D6B9;
+        }
+        
+        .branch-item {
+            padding: 12px 24px;
+            border: 1px solid #e3e9f0;
+            border-radius: 6px;
+            background-color: #fff;
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button.branch-item {
+            border: 1px solid #e3e9f0;
+            outline: none;
+            font-family: inherit;
+        }
+        
+        .branch-item:hover {
+            background-color: #f5f7fa;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .branch-item:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .branch-line {
+            width: 2px;
+            height: 30px;
+            background-color: #e3e9f0;
+            align-self: center;
+        }
+        
+        /* 顶部标题区样式 */
+        .top-section {
+            margin-bottom: 20px;
+        }
+        
+        /* 中间内容区样式 */
+        .content-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .content-container {
+            width: 100%;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 12px;
+            border: 1px solid #e3e9f0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Tab内容样式 */
+        .tab-content {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Tab内容内部样式 */
+        .tab-content-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        /* Tab图片样式 */
+        .tab-image {
+            max-width: 80%;
+            max-height: 80%;
+            margin-bottom: 0;
+            opacity: 1;
+        }
+        
+        /* 两步验证双图片样式 */
+        /* 确保容器能同时适应宽度和高度 */
+        .two-factor-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            min-height: 200px;
+            position: relative;
+        }
+        
+        /* 调整主容器 */
+        .step1-container {
+            max-width: 80%;
+            max-height: 80%;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        /* 第一张图样式 */
+        .step1-container .tab-image:first-child {
+            max-width: 100%;
+            max-height: 288px;
+            height: auto;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 0 17px rgba(0, 0, 0, 0.10));
+            will-change: filter, transform;
+            transform: translateZ(0);
+        }
+        
+        /* 第二张图样式 */
+        .step1-container .tab-image:last-child {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: auto;
+            z-index: 2;
+            transform-origin: top left;
+            transform: translate(110%, 170%);
+            filter: drop-shadow(0 0 17px rgba(0, 0, 0, 0.10));
+            will-change: filter, transform;
+        }
+
+        .tab-content-inner p {
+            margin: 10px 0;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        /* 底部Tab区样式 */
+        .tab-section {
+            margin-top: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Tab按钮样式 */
+        .tab-button {
+            background-color: #f5f7fa;
+            color: #546A9E;
+            border: 1px solid #e3e9f0;
+            padding: 12px 24px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .tab-button:hover {
+            background-color: #e3e9f0;
+            color: #333;
+        }
+        
+        .tab-button.active {
+            background-color: #3370FF;
+            color: #fff;
+            border-color: #3370FF;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: row;
+                gap: 10px;
+            }
+            
+            .tab-button {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+            
+            .content-container {
+                height: 300px;
+            }
+        }
+        
+        /* 初始状态：页面内容隐藏，用于转场动画 */
+        .tab-content,
+        .tabs {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-security-container">
+        <!-- 内容部分 -->
+        <!-- 顶部标题区 -->
+        <div class="top-section">
+            <h1 class="main-title">
+                <button class="back-arrow" onclick="window.location.href='http://localhost:8000/'" title="返回安全功能总览">
+                    <img src="back-arrow.svg" alt="返回" />
+                </button>
+                终端安全介绍
+            </h1>
+            <div id="tab-description" class="description">
+                飞书提供全面的终端安全管理功能，保障终端设备安全，包括终端设备管理、设备安全策略和终端数据保护等。
+            </div>
+            
+            <!-- Tab区 -->
+            <div class="tab-section">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="device-management">终端设备管理</button>
+                    <button class="tab-button" data-tab="security-policy">设备安全策略</button>
+                    <button class="tab-button" data-tab="data-protection">终端数据保护</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 中间内容区 -->
+        <div class="content-section">
+            <div class="content-container">
+                <!-- 可切换的内容将在这里显示 -->
+                <div id="content-device-management" class="tab-content active">
+                    <!-- 终端设备管理内容区域 -->
+                    <div class="two-factor-images">
+                        <div class="step1-container">
+                            <img src="终端安全-step1.svg" alt="终端设备管理 主图" class="tab-image">
+                            <img src="终端安全-step2.svg" alt="终端设备管理 说明" class="tab-image delay-animation">
+                        </div>
+                    </div></div>
+                <div id="content-security-policy" class="tab-content">
+                    <!-- 设备安全策略内容区域 -->
+                    <div class="two-factor-images">
+                        <div class="step1-container">
+                            <img src="终端安全-step1.svg" alt="设备安全策略 主图" class="tab-image">
+                            <img src="终端安全-step2.svg" alt="设备安全策略 说明" class="tab-image delay-animation">
+                        </div>
+                    </div></div>
+                <div id="content-data-protection" class="tab-content">
+                    <!-- 终端数据保护内容区域 -->
+                    <div class="two-factor-images">
+                        <div class="step1-container">
+                            <img src="终端安全-step1.svg" alt="终端数据保护 主图" class="tab-image">
+                            <img src="终端安全-step2.svg" alt="终端数据保护 说明" class="tab-image delay-animation">
+                        </div>
+                    </div></div>
+            </div>
+        </div>
+        
+
+    </div>
+    
+    <script>
+        // 解析URL参数
+        function getQueryParam(name) {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        // 实现tab切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            var tabButtons = document.querySelectorAll('.tab-button');
+            var tabContents = document.querySelectorAll('.tab-content');
+            var tabDescription = document.getElementById('tab-description');
+            
+            // 定义每个tab对应的描述文案
+            var tabDescriptions = {
+                'device-management': '终端设备管理功能帮助企业集中管理所有终端设备，包括设备注册、设备状态监控和设备生命周期管理。',
+                'security-policy': '设备安全策略允许企业配置终端设备的安全规则，包括密码策略、应用安装控制和网络访问限制等。',
+                'data-protection': '终端数据保护功能确保终端设备上的数据安全，包括数据加密、远程数据擦除和数据备份等。'
+            };
+            
+            // 为每个tab按钮添加点击事件
+            tabButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var tabId = button.getAttribute('data-tab');
+                    
+                    // 移除所有按钮的active类
+                    tabButtons.forEach(function(btn) { btn.classList.remove('active'); });
+                    // 添加当前按钮的active类
+                    button.classList.add('active');
+                    
+                    // 隐藏所有内容
+                    tabContents.forEach(function(content) { content.classList.remove('active'); });
+                    // 显示当前内容
+                    var currentContent = document.getElementById('content-' + tabId);
+                    if (currentContent) {
+                        currentContent.classList.add('active');
+                    }
+                    
+                    // 更新描述文案
+                    if (tabDescriptions[tabId] && tabDescription) {
+                        tabDescription.textContent = tabDescriptions[tabId];
+                    }
+                });
+            });
+            
+            // 检查URL参数，自动切换到指定tab
+            var tabParam = getQueryParam('tab');
+            if (tabParam) {
+                // 找到对应的tab按钮并触发点击事件
+                var targetButton = document.querySelector('.tab-button[data-tab="' + tabParam + '"]');
+                if (targetButton) {
+                    targetButton.click();
+                }
+            }
+        });
+    </script>
+    <script>
+        // 页面加载完成后执行转场动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查是否有转场卡片信息
+            var transitionCardInfo = sessionStorage.getItem('transitionCardInfo');
+            console.log('Transition card info in detail page:', transitionCardInfo);
+            
+            if (transitionCardInfo) {
+                var cardInfo = JSON.parse(transitionCardInfo);
+                console.log('Parsed card info:', cardInfo);
+                
+                // 获取页面容器
+                var container = document.querySelector('.terminal-security-container');
+                
+                // 创建临时动画元素
+                var tempCard = document.createElement('div');
+                tempCard.style.position = 'fixed';
+                tempCard.style.left = cardInfo.x + 'px';
+                tempCard.style.top = cardInfo.y + 'px';
+                tempCard.style.width = cardInfo.width + 'px';
+                tempCard.style.height = cardInfo.height + 'px';
+                tempCard.style.backgroundColor = cardInfo.backgroundColor;
+                tempCard.style.borderRadius = cardInfo.borderRadius;
+                tempCard.style.boxShadow = '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)';
+                tempCard.style.zIndex = '9999';
+                tempCard.style.pointerEvents = 'none';
+                tempCard.style.overflow = 'hidden';
+                
+                // 添加卡片内容
+                tempCard.innerHTML = '                    <h3 style="margin: 20px; font-size: 24px; color: white;">' + cardInfo.title +  '</h3>                    <p style="margin: 0 20px 20px; font-size: 16px; color: rgba(255,255,255,0.8);">' + cardInfo.description +  '</p>                ';
+                
+                // 添加到页面
+                document.body.appendChild(tempCard);
+                console.log('Temp card added to body');
+                
+                // 直接显示页面内容，不执行复杂动画
+                // 确保页面内容可见
+                document.querySelectorAll('.tab-content').forEach(function(content) {
+                    content.style.opacity = '1';
+                });
+                document.querySelectorAll('.tabs').forEach(function(tab) {
+                    tab.style.opacity = '1';
+                });
+                
+                // 移除临时元素
+                setTimeout(function() {
+                    if (tempCard.parentNode) {
+                        document.body.removeChild(tempCard);
+                    }
+                    // 清除sessionStorage
+                    sessionStorage.removeItem('transitionCardInfo');
+                }, 300);
+            } else {
+                // 如果没有转场信息，直接显示页面内容
+                console.log('No transition info, showing page content directly');
+                document.querySelectorAll('.tab-content').forEach(function(content) {
+                    content.style.opacity = '1';
+                });
+                document.querySelectorAll('.tabs').forEach(function(tab) {
+                    tab.style.opacity = '1';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

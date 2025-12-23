@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飞书安全功能详情</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 详情页面特定样式 */
+        .detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+        
+        .back-button {
+            background-color: #f5f7fa;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background-color: #e3e9f0;
+        }
+        
+        .detail-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #002A8F;
+            margin-bottom: 20px;
+        }
+        
+        .detail-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        /* 双图片布局容器 */
+        .detail-image-container {
+            width: 100%;
+            height: 400px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .detail-section {
+            margin-bottom: 25px;
+        }
+        
+        .detail-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #002A8F;
+            margin-bottom: 10px;
+        }
+        
+        .detail-section p {
+            font-size: 14px;
+            color: #546A9E;
+            margin-bottom: 10px;
+        }
+        
+        .feature-list {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-list li {
+            font-size: 14px;
+            color: #546A9E;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-container">
+        <!-- 返回按钮 -->
+        <button class="back-button" onclick="window.history.back()">返回安全功能总览</button>
+        
+        <!-- 详情标题 -->
+        <div class="detail-title" id="detailTitle">功能详情</div>
+        
+        <!-- 详情内容 -->
+        <div class="detail-content" id="detailContent">
+            <p>请点击安全功能总览页面中的功能点或卡片标题查看详细内容。</p>
+        </div>
+        
+        <!-- 双图片布局容器 -->
+        <div class="detail-image-container" id="imageContainer">
+            <!-- 双图片布局将通过JavaScript动态加载 -->
+        </div>
+        
+        <!-- 功能特点 -->
+        <div class="detail-section">
+            <h3>功能特点</h3>
+            <ul class="feature-list" id="featureList">
+                <!-- 动态生成功能特点列表 -->
+            </ul>
+        </div>
+        
+        <!-- 应用场景 -->
+        <div class="detail-section">
+            <h3>应用场景</h3>
+            <p id="useCase">了解该功能在实际工作中的应用场景和价值。</p>
+        </div>
+    </div>
+    
+    <script>
+        // 获取URL参数
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        // 功能详情数据
+        const featureDetails = {
+            "账号安全": {
+                title: "账号安全",
+                content: "飞书账号安全功能提供全面的身份验证和账号保护机制，确保用户账号的安全性和可信度。",
+                features: ["SSO单点登录", "多因素认证", "密码强度管理", "登录异常检测", "账号锁定保护"],
+                useCase: "适用于需要严格控制账号访问权限的企业，特别是涉及敏感信息的团队。"
+            },
+            "终端安全": {
+                title: "终端安全",
+                content: "飞书终端安全功能提供全面的设备管理和安全策略控制，确保用户在各种终端设备上的使用安全。",
+                features: ["终端设备管理", "设备安全策略", "终端数据保护", "设备合规检查", "远程设备管理"],
+                useCase: "适用于员工使用多种终端设备办公的企业，确保企业数据在各种设备上的安全。"
+            },
+            "数据保护": {
+                title: "数据保护",
+                content: "飞书数据保护功能提供全面的数据安全保障机制，确保企业数据的机密性、完整性和可用性。",
+                features: ["数据加密", "数据备份恢复", "数据合规性检查", "数据销毁", "数据泄漏防护"],
+                useCase: "适用于处理敏感数据的企业，确保数据符合合规要求并防止数据泄漏。"
+            },
+            "成员权限": {
+                title: "成员权限",
+                content: "飞书成员权限功能提供灵活的权限管理能力，确保不同角色的成员只能访问其需要的资源。",
+                features: ["组织架构可见范围", "名片字段可见范围", "授权权限", "沟通协作权限", "对外沟通权限"],
+                useCase: "适用于需要精细权限控制的企业，确保企业资源的安全访问。"
+            },
+            "访问安全": {
+                title: "访问安全",
+                content: "飞书访问安全功能提供持续的访问请求验证和控制，确保只有授权用户能够访问企业资源。",
+                features: ["访问策略管理", "网络访问控制", "异常访问检测", "访问日志记录"],
+                useCase: "适用于需要严格控制网络访问的企业，确保企业资源的安全访问。"
+            },
+            "日志审计": {
+                title: "日志审计",
+                content: "飞书日志审计功能提供完整的操作日志记录和分析能力，确保企业能够追踪和审计所有操作。",
+                features: ["操作日志记录", "日志查询分析", "安全事件告警", "合规报告生成"],
+                useCase: "适用于需要满足合规要求的企业，确保所有操作都可追踪和审计。"
+            },
+            "SSO账号登录": {
+                title: "SSO账号登录",
+                content: "SSO（单点登录）功能允许用户使用一组凭据访问多个应用程序，提高用户体验和安全性。",
+                features: ["跨应用单点登录", "统一身份验证", "简化登录流程", "增强安全性"],
+                useCase: "适用于使用多个企业应用程序的组织，提高用户工作效率并加强账号安全。"
+            },
+            "登录方式管理": {
+                title: "登录方式管理",
+                content: "飞书支持多种登录方式，企业管理员可以根据需求配置合适的登录方式。",
+                features: ["密码登录", "验证码登录", "第三方登录", "生物识别登录"],
+                useCase: "适用于需要灵活登录选项的企业，满足不同用户的登录习惯和安全需求。"
+            },
+            "登录密码管理": {
+                title: "登录密码管理",
+                content: "飞书提供完善的密码管理功能，确保用户密码的安全性和复杂性。",
+                features: ["密码强度检查", "定期密码更新", "密码重置流程", "密码历史记录"],
+                useCase: "适用于需要强密码策略的企业，防止弱密码导致的安全风险。"
+            },
+            "两步验证": {
+                title: "两步验证",
+                content: "两步验证功能在密码验证的基础上增加了额外的安全层，提高账号安全性。",
+                features: ["短信验证码", "应用验证码", "硬件密钥", "生物识别验证"],
+                useCase: "适用于需要高级安全保护的企业，防止密码泄露导致的账号被盗。"
+            },
+            "登录有效期设置": {
+                title: "登录有效期设置",
+                content: "企业管理员可以设置登录有效期，确保用户定期重新验证身份。",
+                features: ["自定义登录时长", "自动登出机制", "会话管理"],
+                useCase: "适用于需要严格控制登录状态的企业，防止长时间未活动的会话导致的安全风险。"
+            },
+            "终端设备管理": {
+                title: "终端设备管理",
+                content: "飞书提供全面的终端设备管理功能，确保企业设备的安全性和合规性。",
+                features: ["设备注册管理", "设备状态监控", "设备远程管理", "设备分组管理"],
+                useCase: "适用于拥有大量终端设备的企业，提高设备管理效率和安全性。"
+            },
+            "设备安全策略": {
+                title: "设备安全策略",
+                content: "企业管理员可以配置各种设备安全策略，确保设备符合企业安全要求。",
+                features: ["操作系统要求", "应用程序控制", "网络连接限制", "数据传输加密"],
+                useCase: "适用于需要统一设备安全标准的企业，确保所有设备都符合安全要求。"
+            },
+            "终端数据保护": {
+                title: "终端数据保护",
+                content: "飞书提供全面的终端数据保护功能，防止数据在终端设备上的泄露和丢失。",
+                features: ["数据加密存储", "远程数据擦除", "数据访问控制", "数据备份"],
+                useCase: "适用于处理敏感数据的企业，确保数据在终端设备上的安全。"
+            },
+            "数据加密": {
+                title: "数据加密",
+                content: "飞书采用先进的加密技术保护企业数据，确保数据在传输和存储过程中的安全性。",
+                features: ["传输加密", "存储加密", "端到端加密", "加密密钥管理"],
+                useCase: "适用于处理高度敏感数据的企业，确保数据的机密性和完整性。"
+            },
+            "数据备份恢复": {
+                title: "数据备份恢复",
+                content: "飞书提供完善的数据备份和恢复功能，确保企业数据的可用性和可恢复性。",
+                features: ["定期自动备份", "增量备份", "数据恢复机制", "备份验证"],
+                useCase: "适用于需要保证业务连续性的企业，防止数据丢失导致的业务中断。"
+            },
+            "数据合规性检查": {
+                title: "数据合规性检查",
+                content: "飞书提供数据合规性检查功能，确保企业数据符合相关法规和标准。",
+                features: ["合规性扫描", "违规行为检测", "合规报告生成", "合规建议"],
+                useCase: "适用于需要满足行业合规要求的企业，避免合规风险。"
+            },
+            "数据销毁": {
+                title: "数据销毁",
+                content: "飞书提供安全的数据销毁功能，确保不再需要的数据被彻底删除，防止数据泄露。",
+                features: ["安全删除机制", "删除验证", "销毁审计日志", "数据生命周期管理"],
+                useCase: "适用于需要处理过期数据的企业，确保数据的安全销毁。"
+            },
+            "数据泄漏防护": {
+                title: "数据泄漏防护",
+                content: "飞书提供全面的数据泄漏防护功能，防止企业数据的未授权流出。",
+                features: ["内容检测", "访问控制", "水印保护", "异常行为分析"],
+                useCase: "适用于需要防止数据泄漏的企业，保护企业核心资产。"
+            },
+            "组织架构可见范围": {
+                title: "组织架构可见范围",
+                content: "飞书允许企业管理员配置组织架构的可见范围，确保员工只能看到其需要的组织信息。",
+                features: ["部门可见性控制", "层级可见性设置", "自定义可见范围"],
+                useCase: "适用于需要保护组织架构信息的企业，确保敏感组织信息不被泄露。"
+            },
+            "名片字段可见范围": {
+                title: "名片字段可见范围",
+                content: "飞书允许企业管理员配置名片字段的可见范围，确保员工只能看到其需要的个人信息。",
+                features: ["字段级权限控制", "部门特定字段", "自定义可见规则"],
+                useCase: "适用于需要保护员工隐私信息的企业，确保敏感个人信息不被泄露。"
+            },
+            "授权权限": {
+                title: "授权权限",
+                content: "飞书提供灵活的授权权限管理功能，确保员工只能执行其需要的操作。",
+                features: ["角色定义", "权限分配", "权限继承", "临时授权"],
+                useCase: "适用于需要精细权限控制的企业，确保操作安全。"
+            },
+            "沟通协作权限": {
+                title: "沟通协作权限",
+                content: "飞书允许企业管理员配置沟通协作权限，确保员工只能参与其需要的沟通和协作。",
+                features: ["聊天权限", "会议权限", "文档协作权限", "群组管理权限"],
+                useCase: "适用于需要控制沟通协作范围的企业，确保信息安全。"
+            },
+            "对外沟通权限": {
+                title: "对外沟通权限",
+                content: "飞书允许企业管理员配置对外沟通权限，确保员工对外沟通的安全性和合规性。",
+                features: ["外部联系人权限", "外部群权限", "对外消息审核", "对外文件共享控制"],
+                useCase: "适用于需要控制对外沟通的企业，防止信息外泄。"
+            },
+            "云文档设置": {
+                title: "云文档设置",
+                content: "飞书允许企业管理员配置云文档的各种设置，确保文档的安全性和可用性。",
+                features: ["文档访问权限", "版本控制", "文档审核", "文档水印"],
+                useCase: "适用于需要控制文档访问的企业，确保文档安全。"
+            },
+            "文件操作权限": {
+                title: "文件操作权限",
+                content: "飞书允许企业管理员配置文件操作权限，确保员工只能执行其需要的文件操作。",
+                features: ["上传权限", "下载权限", "编辑权限", "删除权限"],
+                useCase: "适用于需要控制文件操作的企业，防止文件误操作和泄露。"
+            },
+            "云文档权限默认值管理": {
+                title: "云文档权限默认值管理",
+                content: "飞书允许企业管理员配置云文档权限的默认值，确保新创建的文档自动应用安全权限。",
+                features: ["默认访问权限", "默认编辑权限", "部门默认设置", "自定义默认规则"],
+                useCase: "适用于需要统一文档权限标准的企业，提高文档管理效率和安全性。"
+            },
+            "访问策略管理": {
+                title: "访问策略管理",
+                content: "飞书允许企业管理员配置各种访问策略，确保只有授权用户能够访问企业资源。",
+                features: ["IP地址限制", "网络环境检测", "设备合规性检查", "时间限制"],
+                useCase: "适用于需要严格控制访问条件的企业，确保资源安全。"
+            },
+            "操作日志记录": {
+                title: "操作日志记录",
+                content: "飞书记录所有用户操作的详细日志，确保操作可追踪和审计。",
+                features: ["全面日志记录", "日志分类", "日志检索", "日志导出"],
+                useCase: "适用于需要审计能力的企业，确保操作可追溯。"
+            },
+            "日志查询分析": {
+                title: "日志查询分析",
+                content: "飞书提供强大的日志查询和分析功能，帮助企业发现安全问题和优化操作流程。",
+                features: ["多条件查询", "日志可视化", "异常行为检测", "趋势分析"],
+                useCase: "适用于需要分析操作数据的企业，提高安全监控能力。"
+            },
+            "安全事件告警": {
+                title: "安全事件告警",
+                content: "飞书提供安全事件告警功能，及时通知企业管理员潜在的安全问题。",
+                features: ["实时告警", "告警分级", "告警通知", "告警处理流程"],
+                useCase: "适用于需要及时响应安全事件的企业，降低安全风险。"
+            }
+        };
+        
+        // 页面加载完成后显示详情
+        document.addEventListener('DOMContentLoaded', () => {
+            // 获取功能名称参数
+            const featureName = getURLParameter('feature');
+            
+            if (featureName && featureDetails[featureName]) {
+                const detail = featureDetails[featureName];
+                
+                // 更新页面标题
+                document.title = detail.title + " - 飞书安全功能详情";
+                
+                // 更新详情内容
+                document.getElementById('detailTitle').textContent = detail.title;
+                document.getElementById('detailContent').innerHTML = `<p>${detail.content}</p>`;
+                
+                // 更新功能特点列表
+                const featureList = document.getElementById('featureList');
+                featureList.innerHTML = '';
+                detail.features.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    featureList.appendChild(li);
+                });
+                
+                // 更新应用场景
+                document.getElementById('useCase').textContent = detail.useCase;
+                
+                // 加载双图片布局
+                loadDualImages(featureName);
+            } else {
+                // 如果没有参数或参数无效，显示默认内容
+                document.getElementById('detailTitle').textContent = "功能详情";
+                document.getElementById('detailContent').innerHTML = `<p>请从安全功能总览页面选择一个功能查看详细内容。</p>`;
+            }
+        });
+        
+        // 加载双图片布局
+        function loadDualImages(featureName) {
+            const imageContainer = document.getElementById('imageContainer');
+            
+            // 创建双图片布局
+            const dualImageHTML = `
+                <div class="dual-image-container">
+                    <div class="main-image-container">
+                        <img src="${featureName}-step1.svg" alt="${featureName} 主图" class="main-image" onerror="this.style.display='none'">
+                    </div>
+                    <img src="${featureName}-step2.svg" alt="${featureName} 说明" class="overlay-image" onerror="this.style.display='none'">
+                </div>
+            `;
+            
+            imageContainer.innerHTML = dualImageHTML;
+        }
+    </script>
+</body>
+</html>
