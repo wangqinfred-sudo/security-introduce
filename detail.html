@@ -9,12 +9,11 @@
         /* 详情页面特定样式 */
         .detail-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: calc(var(--page-header-height) + 16px) auto 40px;
             padding: 40px 20px;
             background-color: #fff;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            margin-top: 40px;
         }
         
         .back-button {
@@ -91,6 +90,10 @@
     </style>
 </head>
 <body>
+    <header class="fixed-header">
+        <div class="header-title">飞书安全功能总览</div>
+        <img class="header-logo" src="feishu-security-logo.svg" alt="Logo" />
+    </header>
     <div class="detail-container">
         <!-- 返回按钮 -->
         <button class="back-button" onclick="window.history.back()">返回安全功能总览</button>
@@ -153,7 +156,7 @@
             "成员权限": {
                 title: "成员权限",
                 content: "飞书成员权限功能提供灵活的权限管理能力，确保不同角色的成员只能访问其需要的资源。",
-                features: ["组织架构可见范围", "名片字段可见范围", "授权权限", "沟通协作权限", "对外沟通权限"],
+                features: ["组织架构可见范围", "名片字段可见范围", "搜索权限", "沟通协作权限", "对外沟通权限"],
                 useCase: "适用于需要精细权限控制的企业，确保企业资源的安全访问。"
             },
             "访问安全": {
@@ -258,11 +261,11 @@
                 features: ["字段级权限控制", "部门特定字段", "自定义可见规则"],
                 useCase: "适用于需要保护员工隐私信息的企业，确保敏感个人信息不被泄露。"
             },
-            "授权权限": {
-                title: "授权权限",
-                content: "飞书提供灵活的授权权限管理功能，确保员工只能执行其需要的操作。",
-                features: ["角色定义", "权限分配", "权限继承", "临时授权"],
-                useCase: "适用于需要精细权限控制的企业，确保操作安全。"
+            "搜索权限": {
+                title: "搜索权限",
+                content: "飞书提供灵活的搜索权限管理功能，确保员工只能搜索其有权限访问的内容。",
+                features: ["搜索范围控制", "敏感内容过滤", "搜索历史管理", "搜索权限审计"],
+                useCase: "适用于需要控制信息搜索范围的企业，确保敏感信息不被未授权搜索。"
             },
             "沟通协作权限": {
                 title: "沟通协作权限",

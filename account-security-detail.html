@@ -15,7 +15,7 @@
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #f7f9fc;
+            background-color: #EBF1FF;
             color: #333;
             display: block;
             overflow-y: auto;
@@ -26,9 +26,9 @@
         /* 账号安全介绍页面特定样式 */
         .account-security-container {
             max-width: 900px;
-            margin: 40px auto;
+            margin: calc(var(--page-header-height) + 16px) auto 40px;
             width: calc(100% - 40px);
-            padding: 40px 0;
+            padding: 24px 0;
             display: flex;
             flex-direction: column;
             gap: 20px !important;
@@ -245,7 +245,7 @@
             box-sizing: border-box;
             text-align: center;
             background-color: #fff;
-            border: 1px solid #e3e9f0;
+            /* 移除边框，避免与content-section的边框形成双层 */
             border-radius: 12px;
         }
         
@@ -408,9 +408,18 @@
             aspect-ratio: 1.71/1; /* 员工端图片宽高比约 1.71:1 */
         }
         
-        /* 其他模块使用默认高度 */
-        .image-container:not(#sub-content-login-method-admin .image-container):not(#sub-content-login-method-employee .image-container) {
-            height: 400px;
+        /* 为其他功能模块设置合适的宽高比 */
+        #sub-content-sso-employee .image-container,
+        #sub-content-sso-admin .image-container,
+        #sub-content-password-employee .image-container,
+        #sub-content-password-admin .image-container,
+        #sub-content-employee .image-container,
+        #sub-content-admin .image-container,
+        #sub-content-validity-employee .image-container,
+        #sub-content-validity-admin .image-container,
+        #sub-content-appeal-employee .image-container,
+        #sub-content-appeal-admin .image-container {
+            aspect-ratio: 1.6/1; /* 设置与登录方式管理管理员端相同的宽高比 */
         }
         
         .step-image {
@@ -443,8 +452,8 @@
         /* 热区样式 */
         .hotspot {
             position: absolute;
-            width: 80px;
-            height: 80px;
+            width: clamp(44px, 6vw, 80px);
+            height: clamp(44px, 6vw, 80px);
             border-radius: 50%;
             background: transparent;
             border: none;
@@ -469,195 +478,8 @@
             animation: pulse 2s infinite;
             pointer-events: none;
         }
-        
-        /* 已移除通用热区样式，各模块样式在对应区域定义 */
 
-        /* ====================== */
-        /* 各功能模块悬浮按钮位置 */
-        /* ====================== */
-        
-        /* 1. SSO账号登录 (员工端) */
-        /* 提高优先级确保样式生效 */
-        #sub-content-sso-employee .hotspot[data-step="1"] {
-                top: 70% !important;
-                left: 65% !important;
-            }
-            #sub-content-sso-employee .hotspot[data-step="2"] {
-                top: 70% !important;
-                left: 65% !important;
-            }
-            #sub-content-sso-employee .hotspot[data-step="3"] {
-                top: 55% !important;
-                left: 73% !important;
-            }
-            #sub-content-sso-employee .hotspot[data-step="4"] {
-                top: 30% !important;
-                left: 65% !important;
-            }
-        
-        /* 2. 登录方式管理 (员工端) */
-        /* 当前热点按钮位置：距离容器顶部50%，左侧50% */
-        #sub-content-login-method-employee .hotspot[data-step="1"] {
-            top: 32% !important;
-            left: 70% !important;
-            animation: pulse 2s infinite;
-        }
-        
-        #sub-content-login-method-employee .hotspot[data-step="2"] {
-            top: 45% !important;
-            left: 55% !important;
-        }
-        
-        /* 5. 登录方式管理 (管理员端) */
-        #sub-content-login-method-admin .hotspots-container .hotspot[data-step="1"] {
-            top: 22% !important;
-            left: 85% !important;
-        }
-        #sub-content-login-method-admin .hotspots-container .hotspot[data-step="2"] {
-            top: 22% !important;
-            left: 85% !important;
-        }
-        #sub-content-login-method-admin .hotspot[data-step="3"] {
-            display: none !important;
-        }
-        
-        /* 3. 登录密码管理 (员工端) */
-        #sub-content-password-employee .hotspot[data-step="1"] {
-            top: 30% !important;
-            left: 65% !important;
-        }
-        
-        #sub-content-password-employee .hotspot[data-step="2"] {
-            top: 70% !important;
-            left: 65% !important;
-        }
-        
-        /* 5. 登录密码管理 (管理员端) */
-        #sub-content-password-admin .hotspot[data-step="1"] {
-            top: 20% !important;
-            left: 70% !important;
-        }
-        
-        #sub-content-password-admin .hotspot[data-step="2"] {
-            top: 15% !important;
-            left: 60% !important;
-        }
-        
-        #sub-content-password-admin .hotspot[data-step="3"] {
-            display: none !important;
-        }
-        
-        /* 4. 两步验证 (员工端) */
-        #sub-content-employee .hotspot[data-step="1"] {
-            top: 30% !important;
-            left: 65% !important;
-        }
-        
-        #sub-content-employee .hotspot[data-step="2"] {
-            top: 70% !important;
-            left: 65% !important;
-        }
-        
-        #sub-content-employee .hotspot[data-step="3"] {
-            top: 30% !important;
-            left: 65% !important;
-        }
-        
-        #sub-content-employee .hotspot[data-step="4"] {
-            top: 40% !important;
-            left: 65% !important;
-        }
-        
-        /* 两步验证 (管理员端) */
-        #sub-content-admin .hotspot[data-step="1"] {
-            top: 45% !important;
-            left: 65% !important;
-        }
-        
-        #sub-content-admin .hotspot[data-step="2"] {
-            top: 30% !important;
-            left: 80% !important;
-        }
-        
-        #sub-content-admin .hotspot[data-step="3"] {
-            top: 30% !important;
-            left: 80% !important;
-        }
-        
-        /* 5. 登录有效期管理 (员工端) */
-        #sub-content-validity-employee .hotspot[data-step="1"] {
-            top: 50% !important;
-            left: 50% !important;
-        }
-        
-        #sub-content-validity-employee .hotspot[data-step="2"] {
-            top: 60% !important;
-            left: 70% !important;
-        }
-        
-        /* 登录有效期管理 (管理员端) */
-        #sub-content-validity-admin .hotspot[data-step="1"] {
-            top: 50% !important;
-            left: 50% !important;
-        }
-        
-        #sub-content-validity-admin .hotspot[data-step="3"] {
-            top: 60% !important;
-            left: 70% !important;
-        }
-        
-        /* SSO账号登录 (管理员端) */
-        #sub-content-sso-admin .hotspot[data-step="1"] {
-                top: 32% !important;
-                left: 75% !important;
-            }
-            #sub-content-sso-admin .hotspot[data-step="2"] {
-                top: 32% !important;
-                left: 75% !important;
-            }
-        
-        #sub-content-appeal-employee .hotspot[data-step="1"] {
-            top: 50% !important;
-            left: 50% !important;
-        }
-        
-        #sub-content-appeal-employee .hotspot[data-step="2"] {
-            top: 60% !important;
-            left: 70% !important;
-        }
-        
-        /* 步骤4热区 - 示例位置 */
-        .hotspot[data-step="4"] {
-            top: 70%;
-            left: 50%;
-        }
-        
-        /* 当前步骤的热区显示 */
-        .hotspot[data-step="1"],
-        .hotspot[data-step="2"],
-        .hotspot[data-step="3"],
-        .hotspot[data-step="4"] {
-            display: none;
-        }
-        
-        /* 显示当前激活步骤的热区 */
-        .image-container .step-image.active[data-step="1"] ~ .hotspots-container .hotspot[data-step="1"] {
-            display: block;
-        }
-        
-        .image-container .step-image.active[data-step="2"] ~ .hotspots-container .hotspot[data-step="2"] {
-            display: block;
-        }
-        
-        .image-container .step-image.active[data-step="3"] ~ .hotspots-container .hotspot[data-step="3"] {
-            display: block;
-        }
-        
-        .image-container .step-image.active[data-step="4"] ~ .hotspots-container .hotspot[data-step="4"] {
-            display: block;
-        }
-        
-        /* 热区动画 */
+        /* 脉冲动画（蓝色圈呼吸效果） */
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -673,10 +495,14 @@
             }
         }
         
-        /* 调整当前步骤对应的热区显示 */
-        .hotspot.active {
-            display: block;
-        }
+        /* 已移除通用热区样式，各模块样式在对应区域定义 */
+
+        /* ====================== */
+        /* 各功能模块悬浮按钮位置
+           说明：原先这里通过 CSS + !important 写死了各步骤热区位置，
+           会覆盖我们调试面板写回到元素上的 inline style，导致你调了
+           坐标但真正显示的仍然是旧值。现已改为统一用 inline style 控制，
+           这里不再对具体步骤的 top/left 进行额外设置。 */
         
         /* 调整主容器 */
         .step1-container {
@@ -804,6 +630,10 @@
     </style>
 </head>
 <body>
+    <header class="fixed-header">
+        <div class="header-title">飞书安全功能总览</div>
+        <img class="header-logo" src="feishu-security-logo.svg" alt="Logo" />
+    </header>
     <div class="account-security-container">
         <!-- 内容部分 -->
         <!-- 顶部标题区 -->
@@ -815,10 +645,7 @@
                 账号安全介绍
             </h1>
             
-            <!-- 描述区域 -->
-            <div id="tab-description" class="description">
-                飞书提供全面的账号安全管理功能，保障用户账号安全，包括SSO账号登录、登录方式管理、登录密码管理、两步验证、登录有效期管理和账号申诉管理等。
-            </div>
+            <!-- 描述区域已移除 -->
             
             <!-- 底部Tab区 - 移动到这里 -->
             <div class="tab-section">
@@ -840,22 +667,22 @@
                     <div class="tab-inner-title">SSO 账号登录</div>
                     <div class="tab-inner-description">支持通过标准协议和企业已有身份平台打通，完成SSO单点登录，同时提供原生身份验证和两步验证等功能，增强账号安全性。</div>
                     <div class="sub-tab-container">
-                        <button class="sub-tab-button active" data-sub-tab="sso-employee">员工端体验</button>
-                        <button class="sub-tab-button" data-sub-tab="sso-admin">管理员配置</button>
+                        <button class="sub-tab-button active" data-sub-tab="sso-admin">管理员配置</button>
+                        <button class="sub-tab-button" data-sub-tab="sso-employee">员工端体验</button>
                     </div>
-                    <div id="sub-content-sso-employee" class="sub-tab-content active">
+                    <div id="sub-content-sso-employee" class="sub-tab-content">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
-                                <img src="sso-step1.png" alt="SSO 步骤1" class="step-image" data-step="1">
+                                <img src="sso-step1.png" alt="SSO 步骤1" class="step-image active" data-step="1">
                                 <img src="sso-step2.png" alt="SSO 步骤2" class="step-image" data-step="2">
                                 <img src="sso-step3.png" alt="SSO 步骤3" class="step-image" data-step="3">
-                                <img src="sso-step4.png" alt="SSO 步骤4" class="step-image active" data-step="4">
+                                <img src="sso-step4.png" alt="SSO 步骤4" class="step-image" data-step="4">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="2" style="display: block;"></div>
-                                <div class="hotspot" data-step="2" data-next-step="3"></div>
-                                <div class="hotspot" data-step="3" data-next-step="4"></div>
-                                <div class="hotspot" data-step="4" data-next-step="1"></div>
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 71.63%; left: 70.63%;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 71.63%; left: 70.16%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="4" style="top: 59.51%; left: 78.90%;"></div>
+                                <div class="hotspot" data-step="4" data-next-step="1" style="top: 34.52%; left: 67.60%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators">
@@ -865,7 +692,7 @@
                             <div class="step-indicator" data-step="4"></div>
                         </div>
                     </div>
-                    <div id="sub-content-sso-admin" class="sub-tab-content">
+                    <div id="sub-content-sso-admin" class="sub-tab-content active">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="sso-admin-step1.png" alt="SSO 管理 步骤1" class="step-image active" data-step="1">
@@ -873,8 +700,9 @@
                                 <img src="sso-admin-step3.png" alt="SSO 管理 步骤3" class="step-image" data-step="3">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="2"></div>
-                                <div class="hotspot" data-step="2" data-next-step="3"></div>
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 62.68%; left: 39.39%;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 14.94%; left: 69.11%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1" style="top: 4.49%; left: 46.50%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators admin-indicators">
@@ -888,18 +716,18 @@
                     <div class="tab-inner-title">登录方式管理</div>
                     <div class="tab-inner-description">灵活管理登录方式，支持多种身份验证方式，包括密码登录、短信验证码登录等，满足不同场景的安全需求。</div>
                     <div class="sub-tab-container">
-                        <button class="sub-tab-button active" data-sub-tab="login-method-employee">员工端体验</button>
-                        <button class="sub-tab-button" data-sub-tab="login-method-admin">管理员配置</button>
+                        <button class="sub-tab-button active" data-sub-tab="login-method-admin">管理员配置</button>
+                        <button class="sub-tab-button" data-sub-tab="login-method-employee">员工端体验</button>
                     </div>
-                    <div id="sub-content-login-method-employee" class="sub-tab-content active">
+                    <div id="sub-content-login-method-employee" class="sub-tab-content">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="login-method-step1.png" alt="登录方式 步骤1" class="step-image active" data-step="1">
                                 <img src="login-method-step2.png" alt="登录方式 步骤2" class="step-image" data-step="2">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="2"></div>
-                                <div class="hotspot" data-step="2" data-next-step="1"></div>
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 35.70%; left: 69.35%;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="1" style="top: 50.05%; left: 56.18%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators">
@@ -907,23 +735,29 @@
                             <div class="step-indicator" data-step="2"></div>
                         </div>
                     </div>
-                    <div id="sub-content-login-method-admin" class="sub-tab-content">
+                    <div id="sub-content-login-method-admin" class="sub-tab-content active">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="login-method-admin-step1.png" alt="登录方式 管理 步骤1" class="step-image active" data-step="1">
                                 <img src="login-method-admin-step2.png" alt="登录方式 管理 步骤2" class="step-image" data-step="2">
                                 <img src="login-method-admin-step3.png" alt="登录方式 管理 步骤3" class="step-image" data-step="3">
+                                <img src="login-method-admin-step4.png" alt="登录方式 管理 步骤4" class="step-image" data-step="4">
+                                <img src="login-method-admin-step5.png" alt="登录方式 管理 步骤5" class="step-image" data-step="5">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="2"></div>
-                                <div class="hotspot" data-step="2" data-next-step="3"></div>
-                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 42.91%; left: 36.60%;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 27.99%; left: 86.13%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="4" style="top: 29.86%; left: 53.03%;"></div>
+                                <div class="hotspot" data-step="4" data-next-step="5" style="top: 28.18%; left: 86.13%;"></div>
+                                <div class="hotspot" data-step="5" data-next-step="1" style="top: 4.49%; left: 45.34%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators admin-indicators">
                             <div class="step-indicator active" data-step="1"></div>
                             <div class="step-indicator" data-step="2"></div>
                             <div class="step-indicator" data-step="3"></div>
+                            <div class="step-indicator" data-step="4"></div>
+                            <div class="step-indicator" data-step="5"></div>
                         </div>
                     </div>
                 </div>
@@ -931,18 +765,18 @@
                     <div class="tab-inner-title">登录密码管理</div>
                     <div class="tab-inner-description">提供密码强度检测、定期密码更换提醒和密码重置功能，帮助用户维护安全的密码策略。</div>
                     <div class="sub-tab-container">
-                        <button class="sub-tab-button active" data-sub-tab="password-employee">员工端体验</button>
-                        <button class="sub-tab-button" data-sub-tab="password-admin">管理员配置</button>
+                        <button class="sub-tab-button active" data-sub-tab="password-admin">管理员配置</button>
+                        <button class="sub-tab-button" data-sub-tab="password-employee">员工端体验</button>
                     </div>
-                    <div id="sub-content-password-employee" class="sub-tab-content active">
+                    <div id="sub-content-password-employee" class="sub-tab-content">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="password-step1.png" alt="密码管理 步骤1" class="step-image active" data-step="1">
                                 <img src="password-step2.png" alt="密码管理 步骤2" class="step-image" data-step="2">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="2"></div>
-                                <div class="hotspot" data-step="2" data-next-step="1"></div>
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 36.57%; left: 69.46%;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="1" style="top: 73.68%; left: 71.33%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators">
@@ -950,23 +784,29 @@
                             <div class="step-indicator" data-step="2"></div>
                         </div>
                     </div>
-                    <div id="sub-content-password-admin" class="sub-tab-content">
+                    <div id="sub-content-password-admin" class="sub-tab-content active">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="password-admin-step1.png" alt="密码管理 管理 步骤1" class="step-image active" data-step="1">
                                 <img src="password-admin-step2.png" alt="密码管理 管理 步骤2" class="step-image" data-step="2">
                                 <img src="password-admin-step3.png" alt="密码管理 管理 步骤3" class="step-image" data-step="3">
+                                <img src="password-admin-step4.png" alt="密码管理 管理 步骤4" class="step-image" data-step="4">
+                                <img src="password-admin-step5.png" alt="密码管理 管理 步骤5" class="step-image" data-step="5">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="2"></div>
-                                <div class="hotspot" data-step="2" data-next-step="3"></div>
-                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 43.84%; left: 63.05%;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 32.65%; left: 77.39%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="4" style="top: 35.45%; left: 51.52%;"></div>
+                                <div class="hotspot" data-step="4" data-next-step="5" style="top: 18.85%; left: 70.63%;"></div>
+                                <div class="hotspot" data-step="5" data-next-step="1" style="top: 2.26%; left: 44.64%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators admin-indicators">
                             <div class="step-indicator active" data-step="1"></div>
                             <div class="step-indicator" data-step="2"></div>
                             <div class="step-indicator" data-step="3"></div>
+                            <div class="step-indicator" data-step="4"></div>
+                            <div class="step-indicator" data-step="5"></div>
                         </div>
                     </div>
                 </div>
@@ -975,12 +815,12 @@
                     <div class="tab-inner-description">启用两步验证后，登录时需要输入密码和动态验证码，有效防止账号被盗，提升账号安全性。</div>
                     <!-- 1. 按钮容器 -->
                     <div class="sub-tab-container">
-                        <button class="sub-tab-button active" data-sub-tab="employee">员工端体验</button>
-                        <button class="sub-tab-button" data-sub-tab="admin">管理员配置</button>
+                        <button class="sub-tab-button active" data-sub-tab="admin">管理员配置</button>
+                        <button class="sub-tab-button" data-sub-tab="employee">员工端体验</button>
                     </div>
                     
                     <!-- 2. 图片容器 -->
-                    <div id="sub-content-employee" class="sub-tab-content active">
+                    <div id="sub-content-employee" class="sub-tab-content">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="two-factor-step1.png" alt="两步验证步骤1" class="step-image active" data-step="1">
@@ -991,13 +831,13 @@
                             <!-- 热区容器 -->
                             <div class="hotspots-container">
                                 <!-- 步骤1热区 -->
-                                <div class="hotspot step1-hotspot" data-next-step="2" data-step="1" style="display: block;"></div>
+                                <div class="hotspot step1-hotspot" data-next-step="2" data-step="1" style="display: block; top: 37.50%; left: 70.05%;"></div>
                                 <!-- 步骤2热区 -->
-                                <div class="hotspot step2-hotspot" data-next-step="3" data-step="2" style="display: none;"></div>
+                                <div class="hotspot step2-hotspot" data-next-step="3" data-step="2" style="display: none; top: 70.51%; left: 68.65%;"></div>
                                 <!-- 步骤3热区 -->
-                                <div class="hotspot step3-hotspot" data-next-step="4" data-step="3" style="display: none;"></div>
+                                <div class="hotspot step3-hotspot" data-next-step="4" data-step="3" style="display: none; top: 36.94%; left: 67.25%;"></div>
                                 <!-- 步骤4热区 -->
-                                <div class="hotspot step4-hotspot" data-next-step="1" data-step="4" style="display: none;"></div>
+                                <div class="hotspot step4-hotspot" data-next-step="1" data-step="4" style="display: none; top: 45.52%; left: 70.75%;"></div>
                             </div>
                         </div>
                         <!-- 导航点容器（移入子内容内部，规范间距） -->
@@ -1010,21 +850,27 @@
                     </div>
                     
                     <!-- 管理员配置内容 - 只在切换时显示 -->
-                    <div id="sub-content-admin" class="sub-tab-content">
+                    <div id="sub-content-admin" class="sub-tab-content active">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
-                                <img src="admin-config-step1.png" alt="管理员配置步骤1" class="step-image active" data-step="1">
-                                <img src="admin-config-step2.png" alt="管理员配置步骤2" class="step-image" data-step="2">
-                                <img src="admin-config-step3.png" alt="管理员配置步骤3" class="step-image" data-step="3">
+                                <img src="two-factor-admin-step1.png" alt="管理员配置步骤1" class="step-image active" data-step="1">
+                                <img src="two-factor-admin-step2.png" alt="管理员配置步骤2" class="step-image" data-step="2">
+                                <img src="two-factor-admin-step3.png" alt="管理员配置步骤3" class="step-image" data-step="3">
+                                <img src="two-factor-admin-step4.png" alt="管理员配置步骤4" class="step-image" data-step="4">
+                                <img src="two-factor-admin-step5.png" alt="管理员配置步骤5" class="step-image" data-step="5">
                             </div>
                             <!-- 热区容器 -->
                             <div class="hotspots-container">
                                 <!-- 步骤1热区 -->
-                                <div class="hotspot step1-hotspot" data-next-step="2" data-step="1"></div>
+                                <div class="hotspot step1-hotspot" data-next-step="2" data-step="1" style="top: 28.55%; left: 38.34%;"></div>
                                 <!-- 步骤2热区 -->
-                                <div class="hotspot step2-hotspot" data-next-step="3" data-step="2"></div>
+                                <div class="hotspot step2-hotspot" data-next-step="3" data-step="2" style="top: 29.48%; left: 84.97%;"></div>
                                 <!-- 步骤3热区 -->
-                                <div class="hotspot step3-hotspot" data-next-step="1" data-step="3"></div>
+                                <div class="hotspot step3-hotspot" data-next-step="4" data-step="3" style="top: 29.30%; left: 53.15%;"></div>
+                                <!-- 步骤4热区 -->
+                                <div class="hotspot step4-hotspot" data-next-step="5" data-step="4" style="top: 28.92%; left: 84.85%;"></div>
+                                <!-- 步骤5热区 -->
+                                <div class="hotspot step5-hotspot" data-next-step="1" data-step="5" style="top: 8.04%; left: 48.25%;"></div>
                             </div>
                         </div>
                         <!-- 管理员配置的导航点容器（移入子内容内部） -->
@@ -1032,6 +878,8 @@
                             <div class="step-indicator active" data-step="1"></div>
                             <div class="step-indicator" data-step="2"></div>
                             <div class="step-indicator" data-step="3"></div>
+                            <div class="step-indicator" data-step="4"></div>
+                            <div class="step-indicator" data-step="5"></div>
                         </div>
                     </div>
                 </div>
@@ -1115,36 +963,42 @@
                     <div class="tab-inner-title">登录有效期管理</div>
                     <div class="tab-inner-description">设置登录有效期，超过有效期后需要重新登录，减少账号长时间处于登录状态带来的安全风险。</div>
                     <div class="sub-tab-container">
-                        <button class="sub-tab-button active" data-sub-tab="validity-employee">员工端体验</button>
-                        <button class="sub-tab-button" data-sub-tab="validity-admin">管理员配置</button>
+                        <button class="sub-tab-button active" data-sub-tab="validity-admin">管理员配置</button>
+                        <button class="sub-tab-button" data-sub-tab="validity-employee">员工端体验</button>
                     </div>
-                    <div id="sub-content-validity-employee" class="sub-tab-content active">
+                    <div id="sub-content-validity-employee" class="sub-tab-content">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="validity-step1.png" alt="有效期 步骤1" class="step-image active" data-step="1">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="1"></div>
+                                <div class="hotspot" data-step="1" data-next-step="1" style="top: 38.62%; left: 47.44%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators">
                             <div class="step-indicator active" data-step="1"></div>
                         </div>
                     </div>
-                    <div id="sub-content-validity-admin" class="sub-tab-content">
+                    <div id="sub-content-validity-admin" class="sub-tab-content active">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="validity-admin-step1.png" alt="有效期 管理 步骤1" class="step-image active" data-step="1">
+                                <img src="validity-admin-step2.png" alt="有效期 管理 步骤2" class="step-image" data-step="2">
                                 <img src="validity-admin-step3.png" alt="有效期 管理 步骤3" class="step-image" data-step="3">
+                                <img src="validity-admin-step4.png" alt="有效期 管理 步骤4" class="step-image" data-step="4">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="3"></div>
-                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 28.55%; left: 67.37%;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 31.72%; left: 86.71%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="4" style="top: 30.60%; left: 86.48%;"></div>
+                                <div class="hotspot" data-step="4" data-next-step="1" style="top: 7.29%; left: 48.83%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators admin-indicators">
                             <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
                             <div class="step-indicator" data-step="3"></div>
+                            <div class="step-indicator" data-step="4"></div>
                         </div>
                     </div>
                 </div>
@@ -1152,10 +1006,10 @@
                     <div class="tab-inner-title">账号申诉管理</div>
                     <div class="tab-inner-description">当账号遇到异常情况时，提供便捷的申诉渠道，快速解决账号问题，保障用户的正常使用。</div>
                     <div class="sub-tab-container">
-                        <button class="sub-tab-button active" data-sub-tab="appeal-employee">员工端体验</button>
-                        <button class="sub-tab-button" data-sub-tab="appeal-admin">管理员配置</button>
+                        <button class="sub-tab-button active" data-sub-tab="appeal-admin">管理员配置</button>
+                        <button class="sub-tab-button" data-sub-tab="appeal-employee">员工端体验</button>
                     </div>
-                    <div id="sub-content-appeal-employee" class="sub-tab-content active">
+                    <div id="sub-content-appeal-employee" class="sub-tab-content">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="appeal-step1.png" alt="申诉 步骤1" class="step-image active" data-step="1">
@@ -1163,9 +1017,9 @@
                                 <img src="appeal-step3.png" alt="申诉 步骤3" class="step-image" data-step="3">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="2"></div>
-                                <div class="hotspot" data-step="2" data-next-step="3"></div>
-                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 68.46%; left: 49.88%;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 43.47%; left: 40.91%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1" style="top: 70.88%; left: 46.62%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators">
@@ -1174,23 +1028,29 @@
                             <div class="step-indicator" data-step="3"></div>
                         </div>
                     </div>
-                    <div id="sub-content-appeal-admin" class="sub-tab-content">
+                    <div id="sub-content-appeal-admin" class="sub-tab-content active">
                         <div class="two-factor-images interactive">
                             <div class="image-container">
                                 <img src="appeal-admin-step1.png" alt="申诉 管理 步骤1" class="step-image active" data-step="1">
                                 <img src="appeal-admin-step2.png" alt="申诉 管理 步骤2" class="step-image" data-step="2">
                                 <img src="appeal-admin-step3.png" alt="申诉 管理 步骤3" class="step-image" data-step="3">
+                                <img src="appeal-admin-step4.png" alt="申诉 管理 步骤4" class="step-image" data-step="4">
+                                <img src="appeal-admin-step5.png" alt="申诉 管理 步骤5" class="step-image" data-step="5">
                             </div>
                             <div class="hotspots-container">
-                                <div class="hotspot" data-step="1" data-next-step="2"></div>
-                                <div class="hotspot" data-step="2" data-next-step="3"></div>
-                                <div class="hotspot" data-step="3" data-next-step="1"></div>
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 62.12%; left: 65.97%;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 29.48%; left: 80.89%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="4" style="top: 85.61%; left: 88.23%;"></div>
+                                <div class="hotspot" data-step="4" data-next-step="5" style="top: 47.76%; left: 54.08%;"></div>
+                                <div class="hotspot" data-step="5" data-next-step="1" style="top: 5.99%; left: 47.67%;"></div>
                             </div>
                         </div>
                         <div class="step-indicators admin-indicators">
                             <div class="step-indicator active" data-step="1"></div>
                             <div class="step-indicator" data-step="2"></div>
                             <div class="step-indicator" data-step="3"></div>
+                            <div class="step-indicator" data-step="4"></div>
+                            <div class="step-indicator" data-step="5"></div>
                         </div>
                     </div>
                 </div>
@@ -1239,11 +1099,13 @@
                         // 获取所有子内容元素
                         var validityAdminContent = document.getElementById('sub-content-validity-admin');
                         var ssoAdminContent = document.getElementById('sub-content-sso-admin');
+                        var ssoEmployeeContent = document.getElementById('sub-content-sso-employee');
                         var loginMethodEmployeeContent = document.getElementById('sub-content-login-method-employee');
                         var loginMethodAdminContent = document.getElementById('sub-content-login-method-admin');
                         var passwordEmployeeContent = document.getElementById('sub-content-password-employee');
                         var passwordAdminContent = document.getElementById('sub-content-password-admin');
                         var twoFactorAdminContent = document.getElementById('sub-content-admin');
+                        var twoFactorEmployeeContent = document.getElementById('sub-content-employee');
                         var appealEmployeeContent = document.getElementById('sub-content-appeal-employee');
                         var appealAdminContent = document.getElementById('sub-content-appeal-admin');
                         
@@ -1251,26 +1113,29 @@
                         var validityEmployeeContent = document.getElementById('sub-content-validity-employee');
                         
                         // 检查当前点击的热点是否在相应的内容中且为最后一步
-                        if ((validityAdminContent && validityAdminContent.contains(this) && step === '3') ||
+                        if ((validityAdminContent && validityAdminContent.contains(this) && step === '4') ||
                             (validityEmployeeContent && validityEmployeeContent.contains(this) && step === '1') || // 登录有效期管理员工端只有一步
                             (ssoAdminContent && ssoAdminContent.contains(this) && step === '3') ||
+                            (ssoEmployeeContent && ssoEmployeeContent.contains(this) && step === '4') ||
                             (loginMethodEmployeeContent && loginMethodEmployeeContent.contains(this) && step === '2') ||
-                            (loginMethodAdminContent && loginMethodAdminContent.contains(this) && step === '3') ||
+                            (loginMethodAdminContent && loginMethodAdminContent.contains(this) && step === '5') ||
                             (passwordEmployeeContent && passwordEmployeeContent.contains(this) && step === '2') ||
-                            (passwordAdminContent && passwordAdminContent.contains(this) && step === '3') ||
-                            (twoFactorAdminContent && twoFactorAdminContent.contains(this) && step === '3') ||
+                            (passwordAdminContent && passwordAdminContent.contains(this) && step === '5') ||
+                            (twoFactorEmployeeContent && twoFactorEmployeeContent.contains(this) && step === '4') ||
+                            (twoFactorAdminContent && twoFactorAdminContent.contains(this) && step === '5') ||
                             (appealEmployeeContent && appealEmployeeContent.contains(this) && step === '3') ||
-                            (appealAdminContent && appealAdminContent.contains(this) && step === '3')) {
+                            (appealAdminContent && appealAdminContent.contains(this) && step === '5')) {
                             isLastStep = true;
                         }
                         
-                        // 如果是步骤4或任何模块的最后一步，则显示弹窗
-                        if (step === '4' || isLastStep) {
+                        // 如果是任何模块的最后一步，则显示弹窗
+                        if (isLastStep) {
                             // 确保弹窗元素存在
                             var popup = document.getElementById('process-end-popup');
                             if (popup) {
                                 // 检查当前是否处于管理员配置流程中
                                 const adminBtn = document.getElementById('admin-config-btn');
+                                const employeeBtn = document.getElementById('employee-experience-btn');
                                 if (adminBtn) {
                                     // 检查当前点击的热点是否在管理员配置内容中
                                     const isInAdminFlow = validityAdminContent && validityAdminContent.contains(this) || 
@@ -1282,6 +1147,17 @@
                                     
                                     // 如果在管理员流程中，隐藏"管理员配置"按钮
                                     adminBtn.style.display = isInAdminFlow ? 'none' : 'inline-block';
+                                }
+
+                                if (employeeBtn) {
+                                    // 仅在管理员流程触发的弹窗中展示“员工端体验”
+                                    const isInAdminFlow = validityAdminContent && validityAdminContent.contains(this) || 
+                                                         ssoAdminContent && ssoAdminContent.contains(this) ||
+                                                         loginMethodAdminContent && loginMethodAdminContent.contains(this) ||
+                                                         passwordAdminContent && passwordAdminContent.contains(this) ||
+                                                         twoFactorAdminContent && twoFactorAdminContent.contains(this) ||
+                                                         appealAdminContent && appealAdminContent.contains(this);
+                                    employeeBtn.style.display = isInAdminFlow ? 'inline-block' : 'none';
                                 }
                                 
                                 popup.style.display = 'flex';
@@ -1556,6 +1432,22 @@
         .popup-next-btn:hover {
             background-color: #336DF4;
         }
+
+        .popup-employee-btn {
+            background-color: white;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup-employee-btn:hover {
+            border-color: #336DF4;
+            color: #336DF4;
+        }
     </style>
     
     <script>
@@ -1565,6 +1457,7 @@
             const popup = document.getElementById('process-end-popup');
             const closeBtn = document.querySelector('.popup-close');
             const adminBtn = document.getElementById('admin-config-btn');
+            const employeeBtn = document.getElementById('employee-experience-btn');
             const nextBtn = document.getElementById('next-btn');
             
             // 关闭弹窗
@@ -1578,29 +1471,70 @@
             // 点击管理员配置按钮 - 根据当前主tab切换到对应管理员配置子标签
             adminBtn.addEventListener('click', function() {
                 // 获取当前激活的主tab
-                const activeMainTab = document.querySelector('.tab-button.active').dataset.tab;
-                
-                // 处理两步验证的特殊情况，其管理员子标签值为"admin"而非"two-factor-admin"
-                let adminSubTabValue;
-                if (activeMainTab === 'two-factor') {
-                    adminSubTabValue = 'admin';
-                } else {
-                    // 其他功能使用标准命名方式 (如 sso-admin, login-method-admin)
-                    adminSubTabValue = activeMainTab + '-admin';
+                const activeMainTab = document.querySelector('.tab-button.active')?.dataset?.tab;
+                if (!activeMainTab) {
+                    closePopup();
+                    return;
                 }
-                
-                const adminTabBtn = document.querySelector(`.sub-tab-button[data-sub-tab="${adminSubTabValue}"]`);
-                
+
+                function getSubTabValue(mainTab, role) {
+                    // 两步验证特殊：子tab值就是 admin / employee
+                    if (mainTab === 'two-factor') return role;
+                    // 登录密码管理：主tab为 password-management，但子tab前缀为 password
+                    if (mainTab === 'password-management') return 'password-' + role;
+                    // 其他功能使用标准命名方式 (如 sso-admin, login-method-admin)
+                    return mainTab + '-' + role;
+                }
+
+                const adminSubTabValue = getSubTabValue(activeMainTab, 'admin');
+                const activeTabContent = document.getElementById(`content-${activeMainTab}`);
+                const adminTabBtn = activeTabContent?.querySelector(`.sub-tab-button[data-sub-tab="${adminSubTabValue}"]`);
+
                 if (adminTabBtn) {
-                    adminTabBtn.click(); // 触发管理员子tab切换
-                    // 激活管理员流程第一步
+                    adminTabBtn.click();
                     setTimeout(() => {
-                        const firstStepIndicator = document.querySelector(`.admin-indicators .step-indicator[data-step="1"]`);
+                        const adminSubContent = (activeMainTab === 'two-factor')
+                            ? document.getElementById('sub-content-admin')
+                            : document.getElementById(`sub-content-${adminSubTabValue}`);
+                        const firstStepIndicator = adminSubContent?.querySelector(`.step-indicator[data-step="1"]`);
                         if (firstStepIndicator) firstStepIndicator.click();
                     }, 100);
                 }
                 closePopup();
             });
+
+            // 点击员工端体验按钮 - 根据当前主tab切换到对应员工端体验子标签
+            if (employeeBtn) {
+                employeeBtn.addEventListener('click', function() {
+                    const activeMainTab = document.querySelector('.tab-button.active')?.dataset?.tab;
+                    if (!activeMainTab) {
+                        closePopup();
+                        return;
+                    }
+
+                    function getSubTabValue(mainTab, role) {
+                        if (mainTab === 'two-factor') return role;
+                        if (mainTab === 'password-management') return 'password-' + role;
+                        return mainTab + '-' + role;
+                    }
+
+                    const employeeSubTabValue = getSubTabValue(activeMainTab, 'employee');
+                    const activeTabContent = document.getElementById(`content-${activeMainTab}`);
+                    const employeeTabBtn = activeTabContent?.querySelector(`.sub-tab-button[data-sub-tab="${employeeSubTabValue}"]`);
+                    if (employeeTabBtn) {
+                        employeeTabBtn.click();
+                        setTimeout(() => {
+                            const employeeSubContent = (activeMainTab === 'two-factor')
+                                ? document.getElementById('sub-content-employee')
+                                : document.getElementById(`sub-content-${employeeSubTabValue}`);
+                            const firstStepIndicator = employeeSubContent?.querySelector(`.step-indicator[data-step="1"]`);
+                            if (firstStepIndicator) firstStepIndicator.click();
+                        }, 100);
+                    }
+
+                    closePopup();
+                });
+            }
             
             // 点击下一个按钮 - 跳转到下一个主标签
             nextBtn.addEventListener('click', function() {
@@ -1659,9 +1593,12 @@
             <div class="popup-message">当前流程已结束，您可以继续体验管理员配置或其他功能。</div>
             <div class="popup-buttons">
                 <button id="admin-config-btn" class="popup-admin-btn">管理员配置</button>
+                <button id="employee-experience-btn" class="popup-employee-btn" style="display: none;">员工端体验</button>
                 <button id="next-btn" class="popup-next-btn">下一个</button>
             </div>
         </div>
     </div>
+
+    <script src="hotspot-debug.js"></script>
 </body>
 </html>

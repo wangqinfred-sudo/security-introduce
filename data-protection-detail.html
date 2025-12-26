@@ -6,15 +6,28 @@
     <title>数据保护介绍</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* 全局样式 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #EBF1FF;
+            color: #333;
+            display: block;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0;
+        }
+        
         /* 数据保护介绍页面特定样式 */
         .data-protection-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            margin-top: 40px;
+            max-width: 900px;
+            margin: calc(var(--page-header-height) + 16px) auto 40px;
+            width: calc(100% - 40px);
+            padding: 24px 0;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 20px !important;
             min-height: 700px;
         }
         
@@ -33,32 +46,13 @@
             transition: all 0.3s ease;
             vertical-align: middle;
         }
-        .back-arrow img {
-            width: 20px;
-            height: 20px;
-            vertical-align: middle;
-        }
+        .back-arrow img { width: 20px; height: 20px; vertical-align: middle; }
+        .back-arrow svg { width: 20px; height: 20px; fill: none; }
+        .back-arrow:hover { background-color: #f5f7fa; }
         
-        .back-arrow svg {
-            width: 20px;
-            height: 20px;
-            fill: none;
-        }
+        .content-section { display: flex; gap: 20px; align-items: flex-start; }
         
-        .back-arrow:hover {
-            background-color: #f5f7fa;
-        }
-        
-        .content-section {
-            display: flex;
-            gap: 40px;
-            align-items: flex-start;
-        }
-        
-        .text-content {
-            flex: 1;
-            max-width: 500px;
-        }
+        .text-content { flex: 1; max-width: 600px; }
         
         .main-title {
             font-size: 28px;
@@ -72,15 +66,11 @@
         .description {
             font-size: 16px;
             line-height: 1.8;
-            color: #546A9E;
-            margin-bottom: 30px;
+            color: #646A73;
+            margin-bottom: 20px;
         }
         
-        .feature-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+        .feature-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         
         .feature-button {
             background-color: #f5f7fa;
@@ -94,514 +84,641 @@
             transition: all 0.3s ease;
         }
         
-        .feature-button:hover {
-            background-color: #e3e9f0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+        .feature-button:hover { background-color: #e3e9f0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
         
-        .flowchart-container {
-            flex: 1;
-            background-color: #fff;
-            border-radius: 12px;
-            padding: 40px;
+        /* 底部Tab区样式 */
+        .tab-section { margin-top: 30px; }
+        
+        .tabs {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
+            gap: 12px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
         }
         
-        /* 移除流程图的背景渐变 */
-        
-        .flowchart-branches {
-            display: flex;
-            gap: 20px;
-            z-index: 1;
-            width: 100%;
-            justify-content: space-between;
-        }
-        
-        .branch {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            width: 48%;
-        }
-        
-        .branch > div {
-            width: 100%;
-            box-sizing: border-box;
-        }
-        
-        .branch-title {
-            padding: 12px 24px;
-            border-radius: 24px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        
-        .sso-branch .branch-title {
-            background-color: #3370FF;
-        }
-        
-        .feishu-branch .branch-title {
-            background-color: #00D6B9;
-        }
-        
-        .branch-item {
-            padding: 12px 24px;
-            border: 1px solid #e3e9f0;
+        /* Tab按钮样式 */
+        .tab-button {
+            background-color: rgba(31,35,41,0.10);
+            color: #1F2329;
+            border: none;
+            height: 28px;
+            padding: 0 12px;
             border-radius: 6px;
-            background-color: #fff;
+            cursor: pointer;
             font-size: 14px;
-            color: #333;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            line-height: 28px;
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .tab-button:hover { background-color: rgba(31,35,41,0.06); color: #1F2329; }
+        .tab-button.active { background-color: rgba(20, 86, 240, 0.2); color: #1456F0; }
+        
+        /* 图片容器基础样式 */
+        .image-container {
+            position: relative;
+            width: 100%;
+            max-height: 600px;
+            margin: 0;
+            background-color: #F2F3F5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        /* 为数据保护设置合适的宽高比（对齐账号安全页面写法） */
+        #sub-content-classification-tag-employee .image-container,
+        #sub-content-classification-tag-admin .image-container,
+        #sub-content-watermark-employee .image-container,
+        #sub-content-watermark-admin .image-container,
+        #sub-content-feishu-dlp-employee .image-container,
+        #sub-content-feishu-dlp-admin .image-container {
+            aspect-ratio: 1.6/1;
+        }
+        
+        .step-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            margin: 0;
+        }
+        
+        .step-image.active { opacity: 1; }
+        
+        /* 热区容器 - 保持覆盖整个图片容器 */
+        .hotspots-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        /* 热区样式 */
+        .hotspot {
+            position: absolute;
+            width: clamp(44px, 6vw, 80px);
+            height: clamp(44px, 6vw, 80px);
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            display: none;
+            transform-origin: center center;
+        }
+        
+        /* 使用伪元素实现脉冲效果，避免与transform冲突 */
+        .hotspot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(0, 96, 255, 0.3);
+            border: 2px solid rgba(0, 96, 255, 0.8);
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+        
+        /* 脉冲动画 */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+        
+        /* 导航点样式 */
+        .step-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            gap: 15px;
+            z-index: 10;
+        }
+        
+        /* 管理员配置的导航点容器显示 */
+        .admin-indicators { display: flex; }
+        
+        .step-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
-        button.branch-item {
-            border: 1px solid #e3e9f0;
-            outline: none;
-            font-family: inherit;
-        }
+        .step-indicator.active { background-color: #0060FF; }
         
-        .branch-item:hover {
-            background-color: #f5f7fa;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+        /* 确保h1和tabs之间的间距为20px */
+        .main-title + .tab-section { margin-top: 20px !important; }
         
-        .branch-item:active {
-            transform: translateY(1px);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-        
-        .branch-line {
-            width: 2px;
-            height: 30px;
-            background-color: #e3e9f0;
-            align-self: center;
-        }
-        
-        /* 顶部标题区样式 */
-        .top-section {
-            margin-bottom: 20px;
-        }
+        /* 顶部区域样式 */
+        .top-section { }
         
         /* 中间内容区样式 */
         .content-section {
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: center;
-        }
-        
-        .content-container {
-            width: 100%;
-            height: 400px;
+            align-items: stretch;
+            gap: 20px !important;
             background-color: #fff;
             border-radius: 12px;
             border: 1px solid #e3e9f0;
-            overflow: hidden;
-            position: relative;
+            overflow: visible;
         }
         
-        /* Tab内容样式 */
-        .tab-content {
-            display: none;
-            width: 100%;
-            height: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Tab内容内部样式 */
-        .tab-content-inner {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-        }
-
-        /* Tab图片样式 */
-        .tab-image {
-            max-width: 80%;
-            max-height: 80%;
-            margin-bottom: 0;
-            opacity: 1;
-        }
-        
-        /* 两步验证双图片样式 */
-        /* 确保容器能同时适应宽度和高度 */
+        /* 双因素验证图片容器 */
         .two-factor-images {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            min-height: 200px;
             position: relative;
-        }
-        
-        /* 调整主容器 */
-        .step1-container {
-            max-width: 80%;
-            max-height: 80%;
-            margin: 0 auto;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        
-        /* 第一张图样式 */
-        .step1-container .tab-image:first-child {
             max-width: 100%;
-            max-height: 288px;
-            height: auto;
-            width: auto;
-            display: block;
-            filter: drop-shadow(0 0 17px rgba(0, 0, 0, 0.10));
-            will-change: filter, transform;
-            transform: translateZ(0);
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
         }
         
-        /* 第二张图样式 */
-        .step1-container .tab-image:last-child {
+        /* 复用上方 .image-container / .step-image 样式，避免重复覆盖 */
+        
+        /* 热区容器 - 保持覆盖整个图片容器 */
+        .hotspots-container {
             position: absolute;
             top: 0;
             left: 0;
-            width: 50%;
-            height: auto;
-            z-index: 2;
-            transform-origin: top left;
-            transform: translate(110%, 170%);
-            filter: drop-shadow(0 0 17px rgba(0, 0, 0, 0.10));
-            will-change: filter, transform;
-        }
-
-        .tab-content-inner p {
-            margin: 10px 0;
-            color: #333;
-            font-size: 16px;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
         
-        /* 底部Tab区样式 */
-        .tab-section {
-            margin-top: 30px;
-        }
-        
-        .tabs {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        /* Tab按钮样式 */
-        .tab-button {
-            background-color: #f5f7fa;
-            color: #546A9E;
-            border: 1px solid #e3e9f0;
-            padding: 12px 24px;
-            border-radius: 24px;
+        /* 热区样式 */
+        .hotspot {
+            position: absolute;
+            width: clamp(44px, 6vw, 80px);
+            height: clamp(44px, 6vw, 80px);
+            border-radius: 50%;
+            background: transparent;
+            border: none;
             cursor: pointer;
-            font-size: 14px;
+            pointer-events: auto;
             transition: all 0.3s ease;
-            font-weight: 500;
+            display: none;
+            transform-origin: center center;
         }
         
-        .tab-button:hover {
-            background-color: #e3e9f0;
-            color: #333;
+        /* 使用伪元素实现脉冲效果，避免与transform冲突 */
+        .hotspot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(0, 96, 255, 0.3);
+            border: 2px solid rgba(0, 96, 255, 0.8);
+            animation: pulse 2s infinite;
+            pointer-events: none;
         }
         
-        .tab-button.active {
-            background-color: #3370FF;
-            color: #fff;
-            border-color: #3370FF;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .tabs {
-                flex-direction: row;
-                gap: 10px;
-            }
-            
-            .tab-button {
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-            
-            .content-container {
-                height: 300px;
-            }
-        }
-        
-        /* 初始状态：页面内容隐藏，用于转场动画 */
-        .tab-content,
-        .tabs {
-            opacity: 0;
+        /* Tab内容样式 - 移除边框，避免与content-section的边框形成双层 */
+        .content-section .tab-content {
+            border: none;
+            border-radius: 0;
         }
     </style>
 </head>
 <body>
-    <div class="data-protection-container">
+    <header class="fixed-header">
+        <div class="header-title">飞书安全功能总览</div>
+        <img class="header-logo" src="feishu-security-logo.svg" alt="Logo" />
+    </header>
+<div class="data-protection-container">
         <!-- 内容部分 -->
         <!-- 顶部标题区 -->
         <div class="top-section">
             <h1 class="main-title">
-                <button class="back-arrow" onclick="window.location.href='http://localhost:8000/'" title="返回安全功能总览">
-                    <img src="back-arrow.svg" alt="返回" />
+                <button class="back-arrow" onclick="window.location.href='index.html'" title="返回安全功能总览">
+                    <img src="back-arrow.svg" alt="返回">
                 </button>
                 数据保护介绍
             </h1>
-            <div class="description">
-                飞书提供全面的数据保护方案，确保企业数据的安全性、完整性和可用性。
+            
+            <!-- 底部Tab区 -->
+            <div class="tab-section">
+                <div class="tabs" style="opacity: 1;">
+                    <button class="tab-button active" data-tab="classification-tag">密级标签</button>
+                    <button class="tab-button" data-tab="watermark">水印设置</button>
+                    <button class="tab-button" data-tab="feishu-dlp">飞书DLP</button>
+                </div>
             </div>
         </div>
         
         <!-- 中间内容区 -->
         <div class="content-section">
-            <div class="content-container">
-                <!-- 可切换的内容将在这里显示 -->
-                <div id="content-data-encryption" class="tab-content active">
-                    <!-- 数据加密内容区域 -->
-                    <div class="two-factor-images">
-                        <div class="step1-container">
-                            <img src="数据保护-step1.svg" alt="数据加密 主图" class="tab-image">
-                            <img src="数据保护-step2.svg" alt="数据加密 说明" class="tab-image delay-animation">
+            <!-- 可切换的内容将在这里显示 -->
+            <!-- 密级标签 -->
+            <div id="content-classification-tag" class="tab-content active" style="opacity: 1;">
+                <div class="tab-inner-title">密级标签</div>
+                <div class="tab-inner-description">通过设置文档密级标签，确保不同层级的文档只能被授权人员访问，防止信息泄露。</div>
+                <div class="sub-tab-container">
+                    <button class="sub-tab-button active" data-sub-tab="classification-tag-admin">管理员配置</button>
+                    <button class="sub-tab-button" data-sub-tab="classification-tag-employee">员工端体验</button>
+                </div>
+                <div id="sub-content-classification-tag-employee" class="sub-tab-content">
+                    <div class="two-factor-images interactive">
+                        <div class="image-container">
+                            <!-- 员工端密级标签 3步 -->
+                            <img src="data-classification-tag-step1.png" alt="密级标签 员工端 步骤1" class="step-image active" data-step="1">
+                            <img src="data-classification-tag-step2.png" alt="密级标签 员工端 步骤2" class="step-image" data-step="2">
+                            <img src="data-classification-tag-step3.png" alt="密级标签 员工端 步骤3" class="step-image" data-step="3">
                         </div>
-                    </div></div>
-                <div id="content-permission-control" class="tab-content">
-                    <!-- 权限控制内容区域 -->
-                    <div class="two-factor-images">
-                        <div class="step1-container">
-                            <img src="数据保护-step1.svg" alt="权限控制 主图" class="tab-image">
-                            <img src="数据保护-step2.svg" alt="权限控制 说明" class="tab-image delay-animation">
+                        <div class="hotspots-container">
+                            <div class="hotspot" data-step="1" data-next-step="2" style="top: 7.29%; left: 64.63%; display: block;"></div>
+                            <div class="hotspot" data-step="2" data-next-step="3" style="top: 76.10%; left: 56.00%;"></div>
+                            <div class="hotspot" data-step="3" data-next-step="1" style="top: 5.05%; left: 23.95%;"></div>
                         </div>
-                    </div></div>
-                <div id="content-watermark-protection" class="tab-content">
-                    <!-- 水印保护内容区域 -->
-                    <div class="two-factor-images">
-                        <div class="step1-container">
-                            <img src="数据保护-step1.svg" alt="水印保护 主图" class="tab-image">
-                            <img src="数据保护-step2.svg" alt="水印保护 说明" class="tab-image delay-animation">
+                    </div>
+                    <div class="step-indicators">
+                        <!-- 员工端密级标签 3个步骤指示器 -->
+                        <div class="step-indicator active" data-step="1"></div>
+                        <div class="step-indicator" data-step="2"></div>
+                        <div class="step-indicator" data-step="3"></div>
+                    </div>
+                </div>
+                <div id="sub-content-classification-tag-admin" class="sub-tab-content active">
+                    <div class="two-factor-images interactive">
+                        <div class="image-container">
+                            <!-- 管理员端密级标签 7步 -->
+                            <img src="data-classification-tag-admin-step1.png" alt="密级标签 管理 步骤1" class="step-image active" data-step="1">
+                            <img src="data-classification-tag-admin-step2.png" alt="密级标签 管理 步骤2" class="step-image" data-step="2">
+                            <img src="data-classification-tag-admin-step3.png" alt="密级标签 管理 步骤3" class="step-image" data-step="3">
+                            <img src="data-classification-tag-admin-step4.png" alt="密级标签 管理 步骤4" class="step-image" data-step="4">
+                            <img src="data-classification-tag-admin-step5.png" alt="密级标签 管理 步骤5" class="step-image" data-step="5">
+                            <img src="data-classification-tag-admin-step6.png" alt="密级标签 管理 步骤6" class="step-image" data-step="6">
+                            <img src="data-classification-tag-admin-step7.png" alt="密级标签 管理 步骤7" class="step-image" data-step="7">
                         </div>
-                    </div></div>
-                <div id="content-data-leakage" class="tab-content">
-                    <!-- 数据防泄漏内容区域 -->
-                    <div class="two-factor-images">
-                        <div class="step1-container">
-                            <img src="数据保护-step1.svg" alt="数据防泄漏 主图" class="tab-image">
-                            <img src="数据保护-step2.svg" alt="数据防泄漏 说明" class="tab-image">
+                        <div class="hotspots-container">
+                            <div class="hotspot" data-step="1" data-next-step="2" style="top: 20.72%; left: 73.60%; display: block;"></div>
+                            <div class="hotspot" data-step="2" data-next-step="3" style="top: 37.69%; left: 85.96%;"></div>
+                            <div class="hotspot" data-step="3" data-next-step="4" style="top: 83.75%; left: 83.16%;"></div>
+                            <div class="hotspot" data-step="4" data-next-step="5" style="top: 83.94%; left: 73.37%;"></div>
+                            <div class="hotspot" data-step="5" data-next-step="6" style="top: 83.94%; left: 85.37%;"></div>
+                            <div class="hotspot" data-step="6" data-next-step="7" style="top: 85.05%; left: 73.95%;"></div>
+                            <div class="hotspot" data-step="7" data-next-step="1" style="top: 4.87%; left: 46.68%;"></div>
                         </div>
-                    </div></div>
-                <div id="content-data-audit" class="tab-content">
-                    <!-- 数据审计内容区域 -->
-                    <div class="two-factor-images">
-                        <div class="step1-container">
-                            <img src="数据保护-step1.svg" alt="数据审计 主图" class="tab-image">
-                            <img src="数据保护-step2.svg" alt="数据审计 说明" class="tab-image">
+                    </div>
+                    <div class="step-indicators admin-indicators">
+                        <!-- 管理员端密级标签 7个步骤指示器 -->
+                        <div class="step-indicator active" data-step="1"></div>
+                        <div class="step-indicator" data-step="2"></div>
+                        <div class="step-indicator" data-step="3"></div>
+                        <div class="step-indicator" data-step="4"></div>
+                        <div class="step-indicator" data-step="5"></div>
+                        <div class="step-indicator" data-step="6"></div>
+                        <div class="step-indicator" data-step="7"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 水印设置 -->
+            <div id="content-watermark" class="tab-content">
+                <div class="tab-inner-title">水印设置</div>
+                <div class="tab-inner-description">为文档和页面添加水印，防止重要信息被未经授权地复制和传播。</div>
+                <div class="sub-tab-container">
+                    <button class="sub-tab-button active" data-sub-tab="watermark-admin">管理员配置</button>
+                    <button class="sub-tab-button" data-sub-tab="watermark-employee">员工端体验</button>
+                </div>
+                <div id="sub-content-watermark-employee" class="sub-tab-content">
+                    <div class="two-factor-images interactive">
+                        <div class="image-container">
+                            <!-- 员工端水印 2步 -->
+                            <img src="data-watermark-step1.png" alt="水印设置 员工端 步骤1" class="step-image active" data-step="1">
+                            <img src="data-watermark-step2.png" alt="水印设置 员工端 步骤2" class="step-image" data-step="2">
                         </div>
-                    </div></div>
+                        <div class="hotspots-container">
+                            <div class="hotspot" data-step="1" data-next-step="2" style="top: 47.94%; left: 78.96%; display: block;"></div>
+                            <div class="hotspot" data-step="2" data-next-step="1" style="top: 50%; left: 50%;"></div>
+                        </div>
+                    </div>
+                    <div class="step-indicators">
+                        <!-- 员工端水印 2个步骤指示器 -->
+                        <div class="step-indicator active" data-step="1"></div>
+                        <div class="step-indicator" data-step="2"></div>
+                    </div>
+                </div>
+                <div id="sub-content-watermark-admin" class="sub-tab-content active">
+                    <div class="two-factor-images interactive">
+                        <div class="image-container">
+                            <!-- 管理员端水印 5步 -->
+                            <img src="data-watermark-admin-step1.png" alt="水印设置 管理 步骤1" class="step-image active" data-step="1">
+                            <img src="data-watermark-admin-step2.png" alt="水印设置 管理 步骤2" class="step-image" data-step="2">
+                            <img src="data-watermark-admin-step3.png" alt="水印设置 管理 步骤3" class="step-image" data-step="3">
+                            <img src="data-watermark-admin-step4.png" alt="水印设置 管理 步骤4" class="step-image" data-step="4">
+                            <img src="data-watermark-admin-step5.png" alt="水印设置 管理 步骤5" class="step-image" data-step="5">
+                        </div>
+                        <div class="hotspots-container">
+                            <div class="hotspot" data-step="1" data-next-step="2" style="top: 73.12%; left: 40.50%; display: block;"></div>
+                            <div class="hotspot" data-step="2" data-next-step="3" style="top: 23.14%; left: 79.90%;"></div>
+                            <div class="hotspot" data-step="3" data-next-step="4" style="top: 32.65%; left: 56.00%;"></div>
+                            <div class="hotspot" data-step="4" data-next-step="5" style="top: 16.80%; left: 71.62%;"></div>
+                            <div class="hotspot" data-step="5" data-next-step="1" style="top: 5.80%; left: 45.16%;"></div>
+                        </div>
+                    </div>
+                    <div class="step-indicators admin-indicators">
+                        <!-- 管理员端水印 5个步骤指示器 -->
+                        <div class="step-indicator active" data-step="1"></div>
+                        <div class="step-indicator" data-step="2"></div>
+                        <div class="step-indicator" data-step="3"></div>
+                        <div class="step-indicator" data-step="4"></div>
+                        <div class="step-indicator" data-step="5"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 飞书DLP -->
+            <div id="content-feishu-dlp" class="tab-content">
+                <div class="tab-inner-title">飞书DLP</div>
+                <div class="tab-inner-description">飞书数据防泄漏（DLP）功能，全面保护企业敏感数据，防止数据从飞书内部泄露。</div>
+                <div class="sub-tab-container">
+                    <button class="sub-tab-button active" data-sub-tab="feishu-dlp-admin">管理员配置</button>
+                    <button class="sub-tab-button" data-sub-tab="feishu-dlp-employee">员工端体验</button>
+                </div>
+                <div id="sub-content-feishu-dlp-employee" class="sub-tab-content">
+                    <div class="two-factor-images interactive">
+                        <div class="image-container">
+                            <!-- 员工端DLP 2步 -->
+                            <img src="data-feishu-dlp-step1.png" alt="飞书DLP 员工端 步骤1" class="step-image active" data-step="1">
+                            <img src="data-feishu-dlp-step2.png" alt="飞书DLP 员工端 步骤2" class="step-image" data-step="2">
+                        </div>
+                        <div class="hotspots-container">
+                            <div class="hotspot" data-step="1" data-next-step="2" style="top: 81.88%; left: 83.74%; display: block;"></div>
+                            <div class="hotspot" data-step="2" data-next-step="1" style="top: 9.34%; left: 58.33%;"></div>
+                        </div>
+                    </div>
+                    <div class="step-indicators">
+                        <!-- 员工端DLP 2个步骤指示器 -->
+                        <div class="step-indicator active" data-step="1"></div>
+                        <div class="step-indicator" data-step="2"></div>
+                    </div>
+                </div>
+                <div id="sub-content-feishu-dlp-admin" class="sub-tab-content active">
+                    <div class="two-factor-images interactive">
+                        <div class="image-container">
+                            <!-- 管理员端DLP 7步 -->
+                            <img src="data-feishu-dlp-admin-step1.png" alt="飞书DLP 管理 步骤1" class="step-image active" data-step="1">
+                            <img src="data-feishu-dlp-admin-step2.png" alt="飞书DLP 管理 步骤2" class="step-image" data-step="2">
+                            <img src="data-feishu-dlp-admin-step3.png" alt="飞书DLP 管理 步骤3" class="step-image" data-step="3">
+                            <img src="data-feishu-dlp-admin-step4.png" alt="飞书DLP 管理 步骤4" class="step-image" data-step="4">
+                            <img src="data-feishu-dlp-admin-step5.png" alt="飞书DLP 管理 步骤5" class="step-image" data-step="5">
+                            <img src="data-feishu-dlp-admin-step6.png" alt="飞书DLP 管理 步骤6" class="step-image" data-step="6">
+                            <img src="data-feishu-dlp-admin-step7.png" alt="飞书DLP 管理 步骤7" class="step-image" data-step="7">
+                        </div>
+                        <div class="hotspots-container">
+                            <div class="hotspot" data-step="1" data-next-step="2" style="top: 75.36%; left: 68.36%; display: block;"></div>
+                            <div class="hotspot" data-step="2" data-next-step="3" style="top: 19.04%; left: 84.67%;"></div>
+                            <div class="hotspot" data-step="3" data-next-step="4" style="top: 84.49%; left: 83.86%;"></div>
+                            <div class="hotspot" data-step="4" data-next-step="5" style="top: 84.31%; left: 76.75%;"></div>
+                            <div class="hotspot" data-step="5" data-next-step="6" style="top: 85.24%; left: 86.54%;"></div>
+                            <div class="hotspot" data-step="6" data-next-step="7" style="top: 84.31%; left: 73.37%;"></div>
+                            <div class="hotspot" data-step="7" data-next-step="1" style="top: 4.87%; left: 47.61%;"></div>
+                        </div>
+                    </div>
+                    <div class="step-indicators admin-indicators">
+                        <!-- 管理员端DLP 7个步骤指示器 -->
+                        <div class="step-indicator active" data-step="1"></div>
+                        <div class="step-indicator" data-step="2"></div>
+                        <div class="step-indicator" data-step="3"></div>
+                        <div class="step-indicator" data-step="4"></div>
+                        <div class="step-indicator" data-step="5"></div>
+                        <div class="step-indicator" data-step="6"></div>
+                        <div class="step-indicator" data-step="7"></div>
+                    </div>
+                </div>
             </div>
         </div>
         
-
-    </div>
-    
-    <script>
-        // 解析URL参数
-        function getQueryParam(name) {
-            try {
-                var url = window.location.href;
-                var paramValue = null;
-                var startIndex = url.indexOf('?' + name + '=');
-                if (startIndex === -1) {
-                    startIndex = url.indexOf('&' + name + '=');
-                }
-                if (startIndex !== -1) {
-                    startIndex += name.length + 2;
-                    var endIndex = url.indexOf('&', startIndex);
-                    if (endIndex === -1) {
-                        endIndex = url.length;
-                    }
-                    paramValue = decodeURIComponent(url.substring(startIndex, endIndex));
-                }
-                return paramValue;
-            } catch (error) {
-                console.error('getQueryParam函数错误:', error);
-                return null;
+        <!-- 新增小tab切换器的CSS样式 -->
+        <style>
+            /* Tab内容样式 */
+            .tab-content {
+                display: none;
+                width: 100%;
+                height: auto;
+                padding: 20px 20px 0 20px;
+                box-sizing: border-box;
+                text-align: center;
+                background-color: #fff;
+                /* 移除边框，避免与content-section的边框形成双层 */
+                border-radius: 12px;
             }
-        }
-        
-        // 实现tab切换功能
+            
+            .tab-content.active {
+                display: flex;
+                flex-direction: column;
+            }
+            /* Tab内部标题和描述 */
+            .tab-inner-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #1F2329;
+                margin-bottom: 6px;
+                margin-top: 0;
+                text-align: left;
+            }
+            
+            .tab-inner-description {
+                font-size: 14px;
+                line-height: 1.6;
+                color: #646A73;
+                margin-bottom: 20px;
+                margin-top: 0;
+                text-align: left;
+            }
+            
+            /* 小tab切换器样式 - 按钮容器 */
+            .sub-tab-container {
+                display: inline-flex;
+                gap: 0;
+                margin-bottom: 20px;
+                margin-top: 0;
+                background-color: #F3F4F6;
+                border-radius: 6px;
+                padding: 1px;
+                overflow: hidden;
+                width: max-content;
+                height: 32px;
+                align-items: center;
+            }
+            
+            .sub-tab-button {
+                background-color: transparent;
+                color: #6B7280;
+                border: none;
+                padding: 0 12px;
+                height: 32px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 32px;
+                transition: all 0.2s ease;
+            }
+            
+            .sub-tab-button:hover { background-color: rgba(0,0,0,0.02); color: #4B5563; }
+            
+            .sub-tab-button.active {
+                background-color: #FFFFFF;
+                color: #1F2937;
+                border: none;
+                box-shadow: inset 0 0 0 1px #D1D5DB, 0 1px 2px rgba(0,0,0,0.04);
+                border-radius: 6px;
+            }
+            
+            /* 小tab内容样式 */
+            .sub-tab-content {
+                display: none;
+                margin-bottom: 0;
+            }
+            
+            .sub-tab-content.active { display: block; }
+        </style>
+    </div>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var tabButtons = document.querySelectorAll('.tab-button');
-            var tabContents = document.querySelectorAll('.tab-content');
-            var tabDescription = document.getElementById('tab-description');
-            
-            // 定义每个tab对应的描述文案
-            var tabDescriptions = {
-                'data-encryption': '数据加密技术确保企业数据在传输和存储过程中始终处于加密状态，防止未授权访问。',
-                'permission-control': '权限控制功能精细管理用户对数据的访问权限，确保数据仅被授权人员访问。',
-                'watermark-protection': '水印保护技术为文档和页面添加水印，防止数据截图或转发导致的信息泄露。',
-                'data-leakage': '数据防泄漏功能监控和阻止敏感数据的未授权传输，保护企业核心信息资产。',
-                'data-audit': '数据审计功能记录所有数据操作行为，便于追溯和合规审查。'
-            };
-            
-            // 为每个tab按钮添加点击事件
-            tabButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var tabId = button.getAttribute('data-tab');
-                    
-                    // 移除所有按钮的active类
-                    tabButtons.forEach(function(btn) {
-                        btn.classList.remove('active');
+            const tabButtons = Array.from(document.querySelectorAll('.tab-button'));
+            const tabContents = Array.from(document.querySelectorAll('.tab-content'));
+
+            function setActiveStep(subContentEl, step) {
+                if (!subContentEl) return;
+
+                const stepContainer = subContentEl.querySelector('.two-factor-images');
+                if (!stepContainer) return;
+
+                const stepStr = String(step);
+
+                const stepImages = stepContainer.querySelectorAll('.step-image');
+                stepImages.forEach(img => {
+                    img.classList.toggle('active', img.dataset.step === stepStr);
+                });
+
+                const allHotspots = stepContainer.querySelectorAll('.hotspot');
+                allHotspots.forEach(hs => {
+                    hs.style.display = hs.dataset.step === stepStr ? 'block' : 'none';
+                });
+
+                const stepIndicatorsWrap = subContentEl.querySelector('.step-indicators');
+                if (stepIndicatorsWrap) {
+                    const indicators = stepIndicatorsWrap.querySelectorAll('.step-indicator');
+                    indicators.forEach(ind => {
+                        ind.classList.toggle('active', ind.dataset.step === stepStr);
                     });
-                    // 添加当前按钮的active类
-                    button.classList.add('active');
-                    
-                    // 隐藏所有内容
-                    tabContents.forEach(function(content) {
-                        content.classList.remove('active');
-                    });
-                    // 显示当前内容
-                    var currentContent = document.getElementById(`content-${tabId}`);
-                    if (currentContent) {
-                        currentContent.classList.add('active');
-                    }
-                    
-                    // 更新描述文案
-                    if (tabDescriptions[tabId] && tabDescription) {
-                        tabDescription.textContent = tabDescriptions[tabId];
-                    }
+                }
+            }
+
+            function activateSubTab(tabContentEl, subTabId) {
+                if (!tabContentEl) return;
+
+                const buttons = Array.from(tabContentEl.querySelectorAll('.sub-tab-button'));
+                const contents = Array.from(tabContentEl.querySelectorAll('.sub-tab-content'));
+
+                buttons.forEach(b => b.classList.toggle('active', b.dataset.subTab === subTabId));
+                contents.forEach(c => {
+                    c.classList.toggle('active', c.id === `sub-content-${subTabId}`);
+                    c.style.opacity = c.classList.contains('active') ? '1' : '0';
+                });
+
+                const activeSub = tabContentEl.querySelector(`#sub-content-${subTabId}`);
+                setActiveStep(activeSub, '1');
+            }
+
+            function activateDefaultAdminSubTab(tabContentEl) {
+                if (!tabContentEl) return;
+
+                const buttons = Array.from(tabContentEl.querySelectorAll('.sub-tab-button'));
+                if (buttons.length === 0) return;
+
+                const adminBtn = buttons.find(b => (b.dataset.subTab || '').endsWith('-admin'));
+                const targetBtn = adminBtn || buttons[0];
+                activateSubTab(tabContentEl, targetBtn.dataset.subTab);
+            }
+
+            function activateMainTab(tabId) {
+                tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+                tabContents.forEach(content => {
+                    const isActive = content.id === `content-${tabId}`;
+                    content.classList.toggle('active', isActive);
+                    content.style.opacity = isActive ? '1' : '0';
+                });
+
+                const activeContent = document.getElementById(`content-${tabId}`);
+                activateDefaultAdminSubTab(activeContent);
+            }
+
+            // 主 tab：切换时默认选中“管理员配置”
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (!btn.dataset.tab) return;
+                    activateMainTab(btn.dataset.tab);
                 });
             });
-            
-            // 检查URL参数，自动切换到指定tab
-            var tabParam = getQueryParam('tab');
-            if (tabParam) {
-                // 找到对应的tab按钮并触发点击事件
-                var targetButton = document.querySelector(`.tab-button[data-tab="${tabParam}"]`);
-                if (targetButton) {
-                    targetButton.click();
-                }
-            }
+
+            // 子 tab：仅作用于当前主 tab（避免全局互相影响）
+            tabContents.forEach(tabContentEl => {
+                const buttons = Array.from(tabContentEl.querySelectorAll('.sub-tab-button'));
+                if (buttons.length === 0) return;
+
+                buttons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        if (!btn.dataset.subTab) return;
+                        activateSubTab(tabContentEl, btn.dataset.subTab);
+                    });
+                });
+            });
+
+            // 热区点击切图（修复：hotspot 不在 image-container 内部）
+            document.querySelectorAll('.hotspot').forEach(hotspot => {
+                hotspot.addEventListener('click', () => {
+                    const nextStep = hotspot.dataset.nextStep;
+                    const subContentEl = hotspot.closest('.sub-tab-content');
+                    if (!subContentEl || !nextStep) return;
+                    setActiveStep(subContentEl, String(nextStep));
+                });
+            });
+
+            // 步骤指示器点击切图
+            document.querySelectorAll('.step-indicator').forEach(indicator => {
+                indicator.addEventListener('click', () => {
+                    const step = indicator.dataset.step;
+                    const subContentEl = indicator.closest('.sub-tab-content');
+                    if (!subContentEl || !step) return;
+                    setActiveStep(subContentEl, String(step));
+                });
+            });
+
+            // 初始化：保持当前 active 主 tab，默认激活管理员配置
+            const defaultTabId = document.querySelector('.tab-button.active')?.dataset?.tab || tabButtons[0]?.dataset?.tab;
+            if (defaultTabId) activateMainTab(defaultTabId);
         });
     </script>
-    <script>
-        // 添加全局错误处理
-        window.onerror = function(message, source, lineno, colno, error) {
-            console.error('全局错误:', message);
-            console.error('错误来源:', source);
-            console.error('错误行号:', lineno);
-            console.error('错误列号:', colno);
-            console.error('错误对象:', error);
-            if (error) {
-                console.error('错误堆栈:', error.stack);
-            }
-            return true; // 阻止默认错误处理
-        };
-        
-        // 页面加载完成后执行转场动画
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                // 检查是否有转场卡片信息
-                var transitionCardInfo = sessionStorage.getItem('transitionCardInfo');
-                console.log('Transition card info in data-protection-detail:', transitionCardInfo);
-                
-                if (transitionCardInfo) {
-                    try {
-                        var cardInfo = JSON.parse(transitionCardInfo);
-                        console.log('Parsed card info:', cardInfo);
-                        
-                        // 创建临时动画元素
-                        var tempCard = document.createElement('div');
-                        tempCard.style.position = 'fixed';
-                        tempCard.style.left = cardInfo.x + 'px';
-                        tempCard.style.top = cardInfo.y + 'px';
-                        tempCard.style.width = cardInfo.width + 'px';
-                        tempCard.style.height = cardInfo.height + 'px';
-                        tempCard.style.backgroundColor = cardInfo.backgroundColor;
-                        tempCard.style.borderRadius = cardInfo.borderRadius;
-                        tempCard.style.boxShadow = '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)';
-                        tempCard.style.zIndex = '9999';
-                        tempCard.style.pointerEvents = 'none';
-                        tempCard.style.overflow = 'hidden';
-                        
-                        // 添加卡片内容
-                        tempCard.innerHTML = '<h3 style="margin: 20px; font-size: 24px; color: white;">' + cardInfo.title + '</h3><p style="margin: 0 20px 20px; font-size: 16px; color: rgba(255,255,255,0.8);">' + cardInfo.description + '</p>';
-                        
-                        // 添加到页面
-                        document.body.appendChild(tempCard);
-                        
-                        // 直接显示页面内容
-                        setTimeout(function() {
-                            // 显示页面内容
-                            var tabContent = document.querySelector('.tab-content');
-                            if (tabContent) {
-                                tabContent.style.opacity = '1';
-                            }
-                            var tabs = document.querySelector('.tabs');
-                            if (tabs) {
-                                tabs.style.opacity = '1';
-                            }
-                        }, 0);
-                        
-                        // 300ms后移除临时元素
-                        setTimeout(function() {
-                            if (tempCard.parentNode) {
-                                document.body.removeChild(tempCard);
-                            }
-                            // 清除sessionStorage
-                            sessionStorage.removeItem('transitionCardInfo');
-                        }, 300);
-                    } catch (error) {
-                        console.error('Error handling transition:', error);
-                        // 清除sessionStorage
-                        sessionStorage.removeItem('transitionCardInfo');
-                        // 显示页面内容
-                        var tabContent = document.querySelector('.tab-content');
-                        if (tabContent) {
-                            tabContent.style.opacity = '1';
-                        }
-                        var tabs = document.querySelector('.tabs');
-                        if (tabs) {
-                            tabs.style.opacity = '1';
-                        }
-                    }
-                } else {
-                    // 没有转场信息，直接显示页面内容
-                    console.log('No transition info, showing content directly');
-                    var tabContent = document.querySelector('.tab-content');
-                    if (tabContent) {
-                        tabContent.style.opacity = '1';
-                    }
-                    var tabs = document.querySelector('.tabs');
-                    if (tabs) {
-                        tabs.style.opacity = '1';
-                    }
-                }
-            } catch (error) {
-                console.error('DOMContentLoaded事件处理函数错误:', error);
-            }
-        });
-    </script>
+<script src="process-end-popup.js"></script>
+<script src="hotspot-debug.js"></script>
 </body>
 </html>

@@ -5,8 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>飞书安全功能总览</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 移除链接的下划线 */
+        a {
+            text-decoration: none !important;
+        }
+
+        /* 首页为固定头部预留空间，避免遮挡卡片 */
+        .slant-cards-page {
+            padding-top: calc(var(--page-header-height) + 4px);
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body class="slant-cards-page">
+    <header class="fixed-header">
+        <div class="header-title">飞书安全功能总览</div>
+        <img class="header-logo" src="feishu-security-logo.svg" alt="Logo" />
+    </header>
     <div class="cards-container">
         <!-- 左侧卡片组 -->
         <div class="card-group left-group">
@@ -47,23 +63,24 @@
                 </div>
             </a>
             
-            <a href="data-protection-detail.html" class="card-link">
-                <div class="slant-card" id="card-data">
-                    <div class="card-header">
-                        <img src="data-protection.svg" alt="数据保护" class="svg-icon">
-                        <div class="card-text-container">
-                            <div class="card-title">数据保护</div>
-                            <div class="card-description">全面保障数据安全</div>
+            <div class="card-link">
+                <a href="data-protection-detail.html">
+                    <div class="slant-card" id="card-data">
+                        <div class="card-header">
+                            <img src="data-protection.svg" alt="数据保护" class="svg-icon">
+                            <div class="card-text-container">
+                                <div class="card-title">数据保护</div>
+                                <div class="card-description">全面保障数据安全</div>
+                            </div>
+                        </div>
+                        <div class="card-tags">
+                            <div class="card-tag">密级标签</div>
+                            <div class="card-tag">水印设置</div>
+                            <div class="card-tag">飞书DLP</div>
                         </div>
                     </div>
-                    <div class="card-tags">
-                        <div class="card-tag">密级标签</div>
-                        <div class="card-tag">水印设置</div>
-                        <div class="card-tag">消息敏感词过滤</div>
-                        <div class="card-tag">飞书DLP</div>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
         
         <!-- 中间飞书Logo区域 -->
@@ -88,44 +105,48 @@
                 </div>
             </a>
             
-            <a href="member-permissions-detail.html" class="card-link">
-                <div class="slant-card right-group-middle" id="card-permissions">
-                    <div class="card-header">
-                        <img src="member-permissions.svg" alt="成员权限" class="svg-icon">
-                        <div class="card-text-container">
-                            <div class="card-title">成员权限</div>
-                            <div class="card-description">灵活的权限管理能力</div>
+            <div class="card-link">
+                <a href="member-permissions-detail.html">
+                    <div class="slant-card right-group-middle" id="card-permissions">
+                        <div class="card-header">
+                            <img src="member-permissions.svg" alt="成员权限" class="svg-icon">
+                            <div class="card-text-container">
+                                <div class="card-title">成员权限</div>
+                                <div class="card-description">灵活的权限管理能力</div>
+                            </div>
+                        </div>
+                        <div class="card-tags">
+                            <div class="card-tag">组织架构可见范围</div>
+                            <div class="card-tag">名片字段可见范围</div>
+                            <div class="card-tag">搜索权限</div>
+                            <div class="card-tag">沟通协作权限</div>
+                            <div class="card-tag">对外沟通权限</div>
+                            <div class="card-tag">云文档设置</div>
+                            <div class="card-tag">文件操作权限</div>
+                            <div class="card-tag">云文档权限默认值管理</div>
                         </div>
                     </div>
-                    <div class="card-tags">
-                        <div class="card-tag">组织架构可见范围</div>
-                        <div class="card-tag">名片字段可见范围</div>
-                        <div class="card-tag">授权权限</div>
-                        <div class="card-tag">沟通协作权限</div>
-                        <div class="card-tag">对外沟通权限</div>
-                        <div class="card-tag">云文档设置</div>
-                        <div class="card-tag">文件操作权限</div>
-                        <div class="card-tag">云文档权限默认值管理</div>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
             
-            <a href="log-audit-detail.html" class="card-link">
-                <div class="slant-card" id="card-audit">
-                    <div class="card-header">
-                        <img src="log-audit.svg" alt="日志审计" class="svg-icon">
-                        <div class="card-text-container">
-                            <div class="card-title">日志审计</div>
-                            <div class="card-description">完整记录操作日志</div>
+            <div class="card-link">
+                <a href="log-audit-detail.html">
+                    <div class="slant-card" id="card-audit">
+                        <div class="card-header">
+                            <img src="log-audit.svg" alt="日志审计" class="svg-icon">
+                            <div class="card-text-container">
+                                <div class="card-title">日志审计</div>
+                                <div class="card-description">完整记录操作日志</div>
+                            </div>
+                        </div>
+                        <div class="card-tags">
+                            <div class="card-tag">成员行为审计</div>
+                            <div class="card-tag">管理员日志</div>
+                            <div class="card-tag">OpenAPI日志</div>
                         </div>
                     </div>
-                    <div class="card-tags">
-                        <div class="card-tag">成员行为审计</div>
-                        <div class="card-tag">管理员日志</div>
-                        <div class="card-tag">OpenAPI日志</div>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
 
     </div>
