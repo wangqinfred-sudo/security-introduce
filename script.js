@@ -6,6 +6,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // 为透视卡片添加顺序动画
         animateSlantCards();
     }
+
+    // 首页“日志审计”卡片：点击标签跳转到详情页对应子功能
+    const auditCard = document.getElementById('card-audit');
+    if (auditCard) {
+        const linkEl = auditCard.closest('a[href]');
+        const href = linkEl ? linkEl.getAttribute('href') : null;
+
+        const map = {
+            '成员行为审计': 'member-behavior-audit',
+            '管理员日志': 'admin-logs',
+            'OpenAPI日志': 'openapi-logs',
+        };
+
+        auditCard.querySelectorAll('.card-tag').forEach(tagEl => {
+            tagEl.style.cursor = 'pointer';
+            tagEl.addEventListener('click', (e) => {
+                const text = (tagEl.textContent || '').trim();
+                const tab = map[text];
+                if (!href || !tab) return;
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = `${href}?tab=${encodeURIComponent(tab)}`;
+            });
+        });
+    }
 });
 
 // 为透视卡片添加动画

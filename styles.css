@@ -5,6 +5,47 @@
     box-sizing: border-box;
 }
 
+/* 全站背景色（详情页与首页保持一致） */
+html, body {
+    background-color: #EBF1FF !important;
+}
+
+/* 全站统一固定头部（详情页与首页共用） */
+:root {
+    --page-header-height: 56px;
+}
+
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--page-header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: none;
+    z-index: 1000;
+}
+
+.fixed-header .header-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1F2329;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+
+.fixed-header .header-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
 /* 正视图卡片布局专用样式 */
 .slant-cards-page {
     margin: 0;
@@ -420,6 +461,13 @@ body::after {
 .tab-content {
     opacity: 0;
     transition: opacity 0.3s ease;
+    background-color: #fff;
+    border: 1px solid #e3e9f0;
+    border-radius: 12px;
+}
+
+.tab-content.active {
+    opacity: 1;
 }
 
 .tabs {

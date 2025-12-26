@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试JavaScript</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>测试JavaScript</h1>
+    <div class="test-result" id="result"></div>
+    
+    <script>
+        // 测试DOMContentLoaded事件
+        document.addEventListener('DOMContentLoaded', () => {
+            const resultDiv = document.getElementById('result');
+            
+            // 测试1: 检查是否能获取元素
+            try {
+                // 创建模拟的DOM结构
+                const container = document.createElement('div');
+                container.className = 'log-audit-container';
+                
+                const tabSection = document.createElement('div');
+                tabSection.className = 'tab-section';
+                
+                const tabs = document.createElement('div');
+                tabs.className = 'tabs';
+                
+                const button1 = document.createElement('button');
+                button1.className = 'tab-button active';
+                button1.dataset.tab = 'audit-logs';
+                button1.textContent = '审计日志';
+                
+                const button2 = document.createElement('button');
+                button2.className = 'tab-button';
+                button2.dataset.tab = 'operation-logs';
+                button2.textContent = '操作日志';
+                
+                const button3 = document.createElement('button');
+                button3.className = 'tab-button';
+                button3.dataset.tab = 'security-alerts';
+                button3.textContent = '安全告警';
+                
+                tabs.appendChild(button1);
+                tabs.appendChild(button2);
+                tabs.appendChild(button3);
+                tabSection.appendChild(tabs);
+                container.appendChild(tabSection);
+                document.body.appendChild(container);
+                
+                // 测试获取元素
+                const tabButtons = document.querySelectorAll('.tab-button');
+                if (tabButtons.length === 3) {
+                    resultDiv.innerHTML += '<p>✓ 成功获取到3个tab按钮</p>';
+                } else {
+                    resultDiv.innerHTML += `<p>✗ 未能正确获取tab按钮，实际数量：${tabButtons.length}</p>`;
+                }
+                
+                // 测试2: 测试事件监听器
+                let clicked = false;
+                button1.addEventListener('click', () => {
+                    clicked = true;
+                });
+                
+                // 模拟点击事件
+                button1.click();
+                
+                if (clicked) {
+                    resultDiv.innerHTML += '<p>✓ 事件监听器正常工作</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>✗ 事件监听器不工作</p>';
+                }
+                
+                // 测试3: 测试DOM操作
+                button2.classList.add('active');
+                if (button2.classList.contains('active')) {
+                    resultDiv.innerHTML += '<p>✓ DOM操作正常工作</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>✗ DOM操作不工作</p>';
+                }
+                
+                resultDiv.className = 'test-result success';
+            } catch (error) {
+                resultDiv.innerHTML = `<p>✗ 测试失败: ${error.message}</p>`;
+                resultDiv.className = 'test-result error';
+            }
+        });
+    </script>
+</body>
+</html>

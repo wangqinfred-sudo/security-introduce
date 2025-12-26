@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试日志审计页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>测试日志审计页面</h1>
+        
+        <div class="test-result" id="file-exists"></div>
+        <div class="test-result" id="content-check"></div>
+        <div class="test-result" id="js-check"></div>
+        
+        <h2>直接访问日志审计页面：</h2>
+        <a href="log-audit-detail.html" target="_blank">打开日志审计详情页</a>
+        
+        <h2>页面内容预览：</h2>
+        <iframe src="log-audit-detail.html" width="100%" height="500" frameborder="1"></iframe>
+    </div>
+    
+    <script>
+        // 测试页面加载
+        window.addEventListener('load', () => {
+            console.log('测试页面加载完成');
+            
+            // 检查日志审计详情页是否存在
+            fetch('log-audit-detail.html')
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('file-exists').innerHTML = '<strong>✓ 日志审计详情页文件存在</strong>';
+                        document.getElementById('file-exists').classList.add('success');
+                        return response.text();
+                    } else {
+                        document.getElementById('file-exists').innerHTML = '<strong>✗ 日志审计详情页文件不存在</strong>';
+                        document.getElementById('file-exists').classList.add('error');
+                        throw new Error('文件不存在');
+                    }
+                })
+                .then(content => {
+                    // 检查页面内容
+                    const hasTabContent = content.includes('tab-content');
+                    const hasAuditContent = content.includes('审计日志');
+                    const hasOperationContent = content.includes('操作日志');
+                    const hasSecurityContent = content.includes('安全告警');
+                    
+                    let contentResult = '<strong>页面内容检查：</strong><br>';
+                    contentResult += `Tab内容：${hasTabContent ? '✓ 存在' : '✗ 不存在'}<br>`;
+                    contentResult += `审计日志：${hasAuditContent ? '✓ 存在' : '✗ 不存在'}<br>`;
+                    contentResult += `操作日志：${hasOperationContent ? '✓ 存在' : '✗ 不存在'}<br>`;
+                    contentResult += `安全告警：${hasSecurityContent ? '✓ 存在' : '✗ 不存在'}<br>`;
+                    
+                    if (hasTabContent && hasAuditContent && hasOperationContent && hasSecurityContent) {
+                        document.getElementById('content-check').innerHTML = contentResult;
+                        document.getElementById('content-check').classList.add('success');
+                    } else {
+                        document.getElementById('content-check').innerHTML = contentResult;
+                        document.getElementById('content-check').classList.add('error');
+                    }
+                    
+                    // 检查JavaScript代码
+                    const hasInitTabs = content.includes('initTabs()');
+                    const hasInitSubTabs = content.includes('initSubTabs()');
+                    const hasImageSwitching = content.includes('initImageSwitching()');
+                    
+                    let jsResult = '<strong>JavaScript代码检查：</strong><br>';
+                    jsResult += `初始化标签页：${hasInitTabs ? '✓ 存在' : '✗ 不存在'}<br>`;
+                    jsResult += `初始化子标签：${hasInitSubTabs ? '✓ 存在' : '✗ 不存在'}<br>`;
+                    jsResult += `图片切换功能：${hasImageSwitching ? '✓ 存在' : '✗ 不存在'}<br>`;
+                    
+                    if (hasInitTabs && hasInitSubTabs && hasImageSwitching) {
+                        document.getElementById('js-check').innerHTML = jsResult;
+                        document.getElementById('js-check').classList.add('success');
+                    } else {
+                        document.getElementById('js-check').innerHTML = jsResult;
+                        document.getElementById('js-check').classList.add('error');
+                    }
+                })
+                .catch(error => {
+                    console.error('测试失败:', error);
+                });
+        });
+    </script>
+</body>
+</html>
