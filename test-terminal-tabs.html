@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终端安全标签测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .pass {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .fail {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>终端安全详情页标签测试</h1>
+    <div id="test-results"></div>
+    <iframe id="test-iframe" src="terminal-security-detail.html"></iframe>
+
+    <script>
+        // 等待页面加载完成
+        window.addEventListener('load', function() {
+            const iframe = document.getElementById('test-iframe');
+            const testResults = document.getElementById('test-results');
+            
+            // 等待iframe加载完成
+            iframe.addEventListener('load', function() {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    // 测试1：检查主标签是否存在
+                    const mainTabs = iframeDoc.querySelectorAll('.tab-button');
+                    addTestResult('主标签存在检查', mainTabs.length === 3, `找到 ${mainTabs.length} 个主标签，期望 3 个`);
+                    
+                    // 测试2：检查标签文本是否正确
+                    const tabTexts = Array.from(mainTabs).map(tab => tab.textContent.trim());
+                    const expectedTexts = ['移动端文件加密', '粘贴保护', '截屏录屏保护'];
+                    const textsMatch = JSON.stringify(tabTexts) === JSON.stringify(expectedTexts);
+                    addTestResult('主标签文本检查', textsMatch, `标签文本：${tabTexts.join(', ')}`);
+                    
+                    // 测试3：检查第一个标签是否激活
+                    const firstTabActive = mainTabs[0].classList.contains('active');
+                    addTestResult('第一个标签激活状态检查', firstTabActive, '第一个标签应该处于激活状态');
+                    
+                    // 测试4：点击第二个标签并检查是否激活
+                    mainTabs[1].click();
+                    setTimeout(() => {
+                        const secondTabActive = mainTabs[1].classList.contains('active');
+                        addTestResult('第二个标签点击检查', secondTabActive, '点击第二个标签后应该处于激活状态');
+                        
+                        // 测试5：检查对应的内容区域是否显示
+                        const secondContent = iframeDoc.getElementById('content-paste-protection');
+                        const secondContentVisible = secondContent.classList.contains('active');
+                        addTestResult('第二个内容区域显示检查', secondContentVisible, '点击第二个标签后对应的内容区域应该显示');
+                    }, 100);
+                    
+                    // 测试6：点击第三个标签并检查是否激活
+                    setTimeout(() => {
+                        mainTabs[2].click();
+                        setTimeout(() => {
+                            const thirdTabActive = mainTabs[2].classList.contains('active');
+                            addTestResult('第三个标签点击检查', thirdTabActive, '点击第三个标签后应该处于激活状态');
+                            
+                            // 测试7：检查对应的内容区域是否显示
+                            const thirdContent = iframeDoc.getElementById('content-screenshot-protection');
+                            const thirdContentVisible = thirdContent.classList.contains('active');
+                            addTestResult('第三个内容区域显示检查', thirdContentVisible, '点击第三个标签后对应的内容区域应该显示');
+                        }, 100);
+                    }, 300);
+                    
+                } catch (error) {
+                    addTestResult('测试执行错误', false, error.message);
+                }
+            });
+        });
+        
+        function addTestResult(testName, passed, message) {
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${passed ? 'pass' : 'fail'}`;
+            resultDiv.innerHTML = `<strong>${testName}:</strong> ${passed ? '通过' : '失败'}<br><small>${message}</small>`;
+            document.getElementById('test-results').appendChild(resultDiv);
+        }
+    </script>
+</body>
+</html>

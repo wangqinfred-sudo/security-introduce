@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证修复</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        iframe { width: 100%; height: 600px; border: 1px solid #ddd; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>验证日志审计详情页修复</h1>
+    <div class="test-result" id="result"></div>
+    
+    <h2>页面预览</h2>
+    <iframe src="http://localhost:8000/log-audit-detail.html" id="preview"></iframe>
+    
+    <script>
+        // 测试页面是否能正常加载
+        const iframe = document.getElementById('preview');
+        const resultDiv = document.getElementById('result');
+        
+        iframe.onload = function() {
+            try {
+                // 检查页面是否包含必要的元素
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // 检查log-audit-container容器
+                const container = doc.querySelector('.log-audit-container');
+                if (container) {
+                    resultDiv.innerHTML += '<p>✓ 成功找到log-audit-container容器</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>✗ 未找到log-audit-container容器</p>';
+                }
+                
+                // 检查活动的tab内容
+                const activeTabContent = doc.querySelector('.tab-content.active');
+                if (activeTabContent) {
+                    resultDiv.innerHTML += '<p>✓ 成功找到活动的tab内容</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>✗ 未找到活动的tab内容</p>';
+                }
+                
+                // 检查活动的sub-tab内容
+                const activeSubTabContent = doc.querySelector('.sub-tab-content.active');
+                if (activeSubTabContent) {
+                    resultDiv.innerHTML += '<p>✓ 成功找到活动的sub-tab内容</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>✗ 未找到活动的sub-tab内容</p>';
+                }
+                
+                // 检查图片元素
+                const images = doc.querySelectorAll('.step-image');
+                if (images.length > 0) {
+                    resultDiv.innerHTML += `<p>✓ 成功找到${images.length}个图片元素</p>`;
+                } else {
+                    resultDiv.innerHTML += '<p>✗ 未找到图片元素</p>';
+                }
+                
+                // 检查活动的图片
+                const activeImage = doc.querySelector('.step-image.active');
+                if (activeImage) {
+                    resultDiv.innerHTML += '<p>✓ 成功找到活动的图片</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>✗ 未找到活动的图片</p>';
+                }
+                
+                resultDiv.className = 'test-result success';
+            } catch (error) {
+                resultDiv.innerHTML = `<p>✗ 测试失败: ${error.message}</p>`;
+                resultDiv.className = 'test-result error';
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>统一功能模块模板</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #EBF1FF;
+            color: #333;
+            display: block;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0;
+        }
+        
+        /* 统一容器样式 */
+        .security-container {
+            max-width: 900px;
+            margin: calc(var(--page-header-height) + 16px) auto 40px;
+            width: calc(100% - 40px);
+            padding: 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-height: 700px;
+        }
+        
+        /* 返回箭头样式 */
+        .back-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            margin-right: 8px;
+            border-radius: 50%;
+            background-color: transparent;
+            color: #002A8F;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            vertical-align: middle;
+        }
+        
+        .back-arrow img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+        
+        .back-arrow:hover {
+            background-color: #f5f7fa;
+        }
+        
+        /* 主标题样式 */
+        .main-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #002A8F;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 副标题样式 */
+        .description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #646A73;
+        }
+        
+        /* 标签切换器样式 */
+        .tab-section {
+            margin-top: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-bottom: 1px solid #e3e9f0;
+            padding-bottom: 10px;
+        }
+        
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            background-color: #E8F0FF;
+            color: #002A8F;
+            font-weight: 500;
+        }
+        
+        /* 内容区域样式 */
+        .content-section {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 12px;
+            border: 1px solid #e3e9f0;
+            overflow: hidden;
+        }
+        
+        /* 移除.tab-content的边框，避免与.content-section的边框形成双层 */
+        .content-section .tab-content {
+            border: none;
+            border-radius: 0;
+        }
+        
+        /* Tab内容样式 */
+        .tab-content {
+            display: none;
+            padding: 30px;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .tab-content.active {
+            display: flex;
+        }
+        
+        /* Tab内部标题和描述 */
+        .tab-inner-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #002A8F;
+            margin-bottom: 8px;
+        }
+        
+        .tab-inner-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #646A73;
+            margin-bottom: 20px;
+        }
+        
+        /* 子标签切换器样式 */
+        .sub-tab-container {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .sub-tab-button {
+            padding: 6px 16px;
+            border: none;
+            background: none;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .sub-tab-button.active {
+            background-color: #E8F0FF;
+            color: #002A8F;
+            font-weight: 500;
+        }
+        
+        /* 子标签内容样式 */
+        .sub-tab-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .sub-tab-content.active {
+            display: flex;
+        }
+        
+        /* 可交互图片容器样式 */
+        .interactive-images {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* 图片容器样式 */
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-color: #F2F3F5;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* 步骤图片样式 */
+        .step-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .step-image.active {
+            opacity: 1;
+        }
+        
+        /* 热点区域容器样式 */
+        .hotspots-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        /* 热点按钮样式 */
+        .hotspot {
+            position: absolute;
+            width: clamp(44px, 6vw, 80px);
+            height: clamp(44px, 6vw, 80px);
+            border-radius: 50%;
+            background: rgba(91, 101, 245, 0.3);
+            border: 2px solid rgba(91, 101, 245, 0.8);
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        .hotspot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(91, 101, 245, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        /* 脉冲动画 */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        /* 步骤指示器样式 */
+        .step-indicators {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .step-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .step-indicator.active {
+            background-color: #0060FF;
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed-header">
+        <div class="header-title">飞书安全功能总览</div>
+        <img class="header-logo" src="feishu-security-logo.svg" alt="Logo" />
+    </header>
+    <div class="security-container">
+        <!-- 标题区域 -->
+        <h1 class="main-title">
+            <button class="back-arrow" onclick="window.location.href='index.html'" title="返回安全功能总览">
+                <img src="back-arrow.svg" alt="返回">
+            </button>
+            功能模块名称
+        </h1>
+        
+        <!-- 副标题区域 -->
+        <div id="tab-description" class="description">
+            这里是功能模块的详细描述，介绍功能的主要特点和优势。
+        </div>
+        
+        <!-- 子功能切换器 -->
+        <div class="tab-section">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="feature1">功能一</button>
+                <button class="tab-button" data-tab="feature2">功能二</button>
+                <button class="tab-button" data-tab="feature3">功能三</button>
+            </div>
+        </div>
+        
+        <!-- 内容展示区域 -->
+        <div class="content-section">
+            <!-- 功能一内容 -->
+            <div id="content-feature1" class="tab-content active">
+                <div class="tab-inner-title">功能一标题</div>
+                <div class="tab-inner-description">功能一的详细描述，介绍其具体用途和操作流程。</div>
+                
+                <!-- 员工/管理员切换器 -->
+                <div class="sub-tab-container">
+                    <button class="sub-tab-button active" data-sub-tab="feature1-employee">员工端体验</button>
+                    <button class="sub-tab-button" data-sub-tab="feature1-admin">管理员配置</button>
+                </div>
+                
+                <!-- 员工端体验 -->
+                <div id="sub-content-feature1-employee" class="sub-tab-content active">
+                    <div class="interactive-images">
+                        <div class="image-container">
+                            <img src="功能一-员工-步骤1.png" alt="功能一员工端步骤1" class="step-image active" data-step="1">
+                            <img src="功能一-员工-步骤2.png" alt="功能一员工端步骤2" class="step-image" data-step="2">
+                            <img src="功能一-员工-步骤3.png" alt="功能一员工端步骤3" class="step-image" data-step="3">
+                            
+                            <!-- 热点区域 -->
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 50%; left: 50%; display: block;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 50%; left: 50%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1" style="top: 50%; left: 50%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 步骤指示器 -->
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 管理员配置 -->
+                <div id="sub-content-feature1-admin" class="sub-tab-content">
+                    <div class="interactive-images">
+                        <div class="image-container">
+                            <img src="功能一-管理员-步骤1.png" alt="功能一管理员端步骤1" class="step-image active" data-step="1">
+                            <img src="功能一-管理员-步骤2.png" alt="功能一管理员端步骤2" class="step-image" data-step="2">
+                            
+                            <!-- 热点区域 -->
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 50%; left: 50%; display: block;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="1" style="top: 50%; left: 50%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 步骤指示器 -->
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 功能二内容 -->
+            <div id="content-feature2" class="tab-content">
+                <div class="tab-inner-title">功能二标题</div>
+                <div class="tab-inner-description">功能二的详细描述，介绍其具体用途和操作流程。</div>
+                
+                <!-- 员工/管理员切换器 -->
+                <div class="sub-tab-container">
+                    <button class="sub-tab-button active" data-sub-tab="feature2-employee">员工端体验</button>
+                    <button class="sub-tab-button" data-sub-tab="feature2-admin">管理员配置</button>
+                </div>
+                
+                <!-- 员工端体验 -->
+                <div id="sub-content-feature2-employee" class="sub-tab-content active">
+                    <div class="interactive-images">
+                        <div class="image-container">
+                            <img src="功能二-员工-步骤1.png" alt="功能二员工端步骤1" class="step-image active" data-step="1">
+                            <img src="功能二-员工-步骤2.png" alt="功能二员工端步骤2" class="step-image" data-step="2">
+                            
+                            <!-- 热点区域 -->
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 50%; left: 50%; display: block;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="1" style="top: 50%; left: 50%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 步骤指示器 -->
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 管理员配置 -->
+                <div id="sub-content-feature2-admin" class="sub-tab-content">
+                    <div class="interactive-images">
+                        <div class="image-container">
+                            <img src="功能二-管理员-步骤1.png" alt="功能二管理员端步骤1" class="step-image active" data-step="1">
+                            <img src="功能二-管理员-步骤2.png" alt="功能二管理员端步骤2" class="step-image" data-step="2">
+                            <img src="功能二-管理员-步骤3.png" alt="功能二管理员端步骤3" class="step-image" data-step="3">
+                            
+                            <!-- 热点区域 -->
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 50%; left: 50%; display: block;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 50%; left: 50%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1" style="top: 50%; left: 50%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 步骤指示器 -->
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 功能三内容 -->
+            <div id="content-feature3" class="tab-content">
+                <div class="tab-inner-title">功能三标题</div>
+                <div class="tab-inner-description">功能三的详细描述，介绍其具体用途和操作流程。</div>
+                
+                <!-- 员工/管理员切换器 -->
+                <div class="sub-tab-container">
+                    <button class="sub-tab-button active" data-sub-tab="feature3-employee">员工端体验</button>
+                    <button class="sub-tab-button" data-sub-tab="feature3-admin">管理员配置</button>
+                </div>
+                
+                <!-- 员工端体验 -->
+                <div id="sub-content-feature3-employee" class="sub-tab-content active">
+                    <div class="interactive-images">
+                        <div class="image-container">
+                            <img src="功能三-员工-步骤1.png" alt="功能三员工端步骤1" class="step-image active" data-step="1">
+                            <img src="功能三-员工-步骤2.png" alt="功能三员工端步骤2" class="step-image" data-step="2">
+                            <img src="功能三-员工-步骤3.png" alt="功能三员工端步骤3" class="step-image" data-step="3">
+                            
+                            <!-- 热点区域 -->
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 50%; left: 50%; display: block;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="3" style="top: 50%; left: 50%;"></div>
+                                <div class="hotspot" data-step="3" data-next-step="1" style="top: 50%; left: 50%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 步骤指示器 -->
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                            <div class="step-indicator" data-step="3"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 管理员配置 -->
+                <div id="sub-content-feature3-admin" class="sub-tab-content">
+                    <div class="interactive-images">
+                        <div class="image-container">
+                            <img src="功能三-管理员-步骤1.png" alt="功能三管理员端步骤1" class="step-image active" data-step="1">
+                            <img src="功能三-管理员-步骤2.png" alt="功能三管理员端步骤2" class="step-image" data-step="2">
+                            
+                            <!-- 热点区域 -->
+                            <div class="hotspots-container">
+                                <div class="hotspot" data-step="1" data-next-step="2" style="top: 50%; left: 50%; display: block;"></div>
+                                <div class="hotspot" data-step="2" data-next-step="1" style="top: 50%; left: 50%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- 步骤指示器 -->
+                        <div class="step-indicators">
+                            <div class="step-indicator active" data-step="1"></div>
+                            <div class="step-indicator" data-step="2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 标签描述文本
+        const tabDescriptions = {
+            'feature1': '功能一的详细描述，介绍功能的主要特点和优势。',
+            'feature2': '功能二的详细描述，介绍功能的主要特点和优势。',
+            'feature3': '功能三的详细描述，介绍功能的主要特点和优势。'
+        };
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置默认标签
+            const urlParams = new URLSearchParams(window.location.search);
+            const tab = urlParams.get('tab');
+            if (tab && tabDescriptions[tab]) {
+                switchTab(tab);
+            }
+            
+            // 标签按钮点击事件
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tab = this.getAttribute('data-tab');
+                    switchTab(tab);
+                    
+                    // 更新URL参数
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('tab', tab);
+                    window.history.pushState({}, '', url);
+                });
+            });
+            
+            // 子标签按钮点击事件
+            document.querySelectorAll('.sub-tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const subTab = this.getAttribute('data-sub-tab');
+                    const parentTab = this.closest('.tab-content').id.replace('content-', '');
+                    
+                    // 切换子标签按钮状态
+                    this.parentElement.querySelectorAll('.sub-tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // 切换子标签内容
+                    this.closest('.tab-content').querySelectorAll('.sub-tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(`sub-content-${parentTab}-${subTab.split('-')[1]}`).classList.add('active');
+                    
+                    // 重置步骤
+                    resetSteps(subTab);
+                });
+            });
+            
+            // 步骤指示器点击事件
+            document.querySelectorAll('.step-indicator').forEach(indicator => {
+                indicator.addEventListener('click', function() {
+                    const step = this.getAttribute('data-step');
+                    const subTab = this.closest('.sub-tab-content').id;
+                    showStep(subTab, step);
+                });
+            });
+            
+            // 热点点击事件
+            document.querySelectorAll('.hotspot').forEach(hotspot => {
+                hotspot.addEventListener('click', function() {
+                    const currentStep = this.getAttribute('data-step');
+                    const nextStep = this.getAttribute('data-next-step');
+                    const subTab = this.closest('.sub-tab-content').id;
+                    showStep(subTab, nextStep);
+                });
+            });
+        });
+        
+        // 切换标签
+        function switchTab(tab) {
+            // 更新标签按钮状态
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            
+            // 更新标签描述
+            document.getElementById('tab-description').textContent = tabDescriptions[tab];
+            
+            // 更新标签内容
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`content-${tab}`).classList.add('active');
+            
+            // 重置子标签和步骤
+            resetSteps(`${tab}-employee`);
+        }
+        
+        // 重置步骤
+        function resetSteps(subTab) {
+            const contentElement = document.getElementById(`sub-content-${subTab}`);
+            if (!contentElement) return;
+            
+            // 重置图片和热点
+            const images = contentElement.querySelectorAll('.step-image');
+            const hotspots = contentElement.querySelectorAll('.hotspot');
+            
+            images.forEach(img => img.classList.remove('active'));
+            images[0].classList.add('active');
+            
+            hotspots.forEach(hotspot => {
+                hotspot.style.display = 'none';
+                hotspot.style.animation = 'none';
+            });
+            
+            if (hotspots.length > 0) {
+                hotspots[0].style.display = 'block';
+                hotspots[0].style.animation = 'pulse 2s infinite';
+            }
+            
+            // 重置步骤指示器
+            const indicators = contentElement.querySelectorAll('.step-indicator');
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            indicators[0].classList.add('active');
+        }
+        
+        // 显示指定步骤
+        function showStep(subTabId, step) {
+            const contentElement = document.getElementById(subTabId);
+            if (!contentElement) return;
+            
+            // 切换图片
+            const images = contentElement.querySelectorAll('.step-image');
+            images.forEach(img => img.classList.remove('active'));
+            contentElement.querySelector(`[data-step="${step}"]`).classList.add('active');
+            
+            // 切换热点
+            const hotspots = contentElement.querySelectorAll('.hotspot');
+            hotspots.forEach(hotspot => {
+                hotspot.style.display = 'none';
+                hotspot.style.animation = 'none';
+            });
+            
+            const currentHotspot = contentElement.querySelector(`.hotspot[data-step="${step}"]`);
+            if (currentHotspot) {
+                currentHotspot.style.display = 'block';
+                currentHotspot.style.animation = 'pulse 2s infinite';
+            }
+            
+            // 切换步骤指示器
+            const indicators = contentElement.querySelectorAll('.step-indicator');
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            contentElement.querySelector(`.step-indicator[data-step="${step}"]`).classList.add('active');
+        }
+    </script>
+</body>
+</html>
